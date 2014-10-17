@@ -267,9 +267,9 @@ class TProtocolController
         $this->input->readMessageEnd();
 
         foreach ($args as $arg) {
-            if ($arg['type'] == TType::STRUCT && $arg['value'] instanceof \Exception) {
+            if ($arg['type'] == TType::STRUCT && isset($arg['value']) && $arg['value'] instanceof \Exception) {
                 throw $arg['value'];
-            } else if ($arg['value'] !== null) {
+            } else if (isset($arg['value']) && $arg['value'] !== null) {
                 return $arg['value'];
             }
         }
