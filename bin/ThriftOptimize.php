@@ -94,7 +94,7 @@ function gen_class()
 function methodTemplate(ReflectionMethod $method, $args, $results)
 {
     //注释返回类型
-    $returnNote = 'mixed';
+    $returnNote = 'void';
     $paramsNote = '';
 
     $types = get_types_constans();
