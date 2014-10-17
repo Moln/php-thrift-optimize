@@ -85,6 +85,26 @@ class TProtocolController
                 function (&$xfer, $item) use ($output) {
                     $xfer += $output->writeBool($item['value']);
                 },
+            TType::BYTE   =>
+                function (&$xfer, $item) use ($output) {
+                    $xfer += $output->writeByte($item['value']);
+                },
+            TType::DOUBLE   =>
+                function (&$xfer, $item) use ($output) {
+                    $xfer += $output->writeDouble($item['value']);
+                },
+            TType::I16   =>
+                function (&$xfer, $item) use ($output) {
+                    $xfer += $output->writeI16($item['value']);
+                },
+            TType::I32   =>
+                function (&$xfer, $item) use ($output) {
+                    $xfer += $output->writeI32($item['value']);
+                },
+            TType::I64   =>
+                function (&$xfer, $item) use ($output) {
+                    $xfer += $output->writeI64($item['value']);
+                },
             TType::STRING =>
                 function (&$xfer, $item) use ($output) {
                     $xfer += $output->writeString($item['value']);
@@ -276,4 +296,5 @@ class TProtocolController
         return null;
     }
 }
+
 

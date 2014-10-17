@@ -1,7 +1,10 @@
 <?php
 namespace Hbase;
 
+use Thrift\Exception\TApplicationException;
+use Thrift\Exception\TProtocolException;
 use Thrift\Protocol\TProtocol;
+use Thrift\Type\TMessageType;
 use Thrift\Type\TType;
 
 interface THBaseServiceIf
@@ -187,7 +190,7 @@ class THBaseServiceClient implements THBaseServiceIf
     /**
      * @param string $table
      * @param \Hbase\TPut $put
-     * @return mixed
+     * @return void
      */
     public function put($table, TPut $put)
     {
@@ -279,7 +282,7 @@ class THBaseServiceClient implements THBaseServiceIf
     /**
      * @param string $table
      * @param \Hbase\TPut[] $puts
-     * @return mixed
+     * @return void
      */
     public function putMultiple($table, array $puts)
     {
@@ -315,7 +318,7 @@ class THBaseServiceClient implements THBaseServiceIf
     /**
      * @param string $table
      * @param \Hbase\TDelete $deleteSingle
-     * @return mixed
+     * @return void
      */
     public function deleteSingle($table, TDelete $deleteSingle)
     {
@@ -526,7 +529,7 @@ class THBaseServiceClient implements THBaseServiceIf
     /**
      * @param string $table
      * @param \Hbase\TScan $scan
-     * @return mixed
+     * @return void
      */
     public function openScanner($table, TScan $scan)
     {
@@ -606,7 +609,7 @@ class THBaseServiceClient implements THBaseServiceIf
 
     /**
      * @param  $scannerId
-     * @return mixed
+     * @return void
      */
     public function closeScanner($scannerId)
     {
@@ -637,7 +640,7 @@ class THBaseServiceClient implements THBaseServiceIf
     /**
      * @param string $table
      * @param \Hbase\TRowMutations $rowMutations
-     * @return mixed
+     * @return void
      */
     public function mutateRow($table, TRowMutations $rowMutations)
     {

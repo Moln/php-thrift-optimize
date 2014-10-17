@@ -1,4 +1,6 @@
 <?php
+use Thrift\Type\TType;
+
 $root = dirname(__DIR__);
 include $root . '/vendor/autoload.php';
 
@@ -64,7 +66,6 @@ function gen_class()
 
     $interfaceTpls = $methodTpls = array();
     $classPrefix   = substr($serviceClass, 0, -6);
-    $obj           = new ReflectionClass($serviceClass);
     $methods       = get_class_methods($serviceClass);
 
     foreach ($methods as $key => $method) {
@@ -78,7 +79,7 @@ function gen_class()
         $class  = $classPrefix . '_' . $method . '_result';
         $result = new $class;
 
-        list($interfaceTpl, $methodTpl) = methodTemplate($obj->getMethod($method), $args::$_TSPEC, $result::$_TSPEC);
+        list($interfaceTpl, $methodTpl) = methodTemplate($method, $args, $result);
         $interfaceTpls[] = $interfaceTpl;
         $methodTpls[]    = $methodTpl;
     }
@@ -91,24 +92,29 @@ function gen_class()
     return $content;
 }
 
-function methodTemplate(ReflectionMethod $method, $args, $results)
+function methodTemplate($methodName, $args, $results)
 {
+
+    $argsData    = $args::$_TSPEC;
+    $resultsData = $results::$_TSPEC;
+
     //注释返回类型
     $returnNote = 'void';
     $paramsNote = '';
 
     $types = get_types_constans();
-    foreach ($args as $key => $arg) {
-        $args[$key]['value'] = '{{' . $arg['var'] . '}}';
+    foreach ($argsData as $key => $arg) {
+        $argsData[$key]['value'] = '{{' . $arg['var'] . '}}';
     }
 
     //参数和返回变量
-    $argsStr      = var_export($args, true);
-    $resultStr    = var_export($results, true);
+    $argsStr      = var_export($argsData, true);
+    $resultStr    = var_export($resultsData, true);
     $methodParams = array(); //方法参数
 
-    foreach ($args as $arg) {
-        $methodParams[$arg['var']] = null;
+    foreach ($argsData as $arg) {
+        $defaultValue = $args->{$arg['var']} !== null ? ' = ' . var_export($args->{$arg['var']}, true) : '';
+        $methodParams[$arg['var']] = '$' . $arg['var'] . $defaultValue;
 
         $argsStr = str_replace('\'{{' . $arg['var'] . '}}\'', '$' . $arg['var'], $argsStr);
         $argsStr = str_replace('\'type\' => ' . $arg['type'], '\'type\' => TType::' . $types[$arg['type']], $argsStr);
@@ -118,12 +124,14 @@ function methodTemplate(ReflectionMethod $method, $args, $results)
         if (isset($arg['class'])) {
             $paramType                 = $arg['class'];
             $classNames                = explode('\\', $paramType);
-            $methodParams[$arg['var']] = end($classNames);
-        } else if ($arg['type'] == \Thrift\Type\TType::BOOL) {
+            $methodParams[$arg['var']] = end($classNames) . ' $' . $arg['var'];
+        } else if ($arg['type'] == TType::BOOL) {
             $paramType = 'bool';
-        } else if ($arg['type'] == \Thrift\Type\TType::STRING) {
+        } else if ($arg['type'] == TType::STRING) {
             $paramType = 'string';
-        } else if ($arg['type'] == \Thrift\Type\TType::LST) {
+        } else if ($arg['type'] >= TType::DOUBLE && $arg['type'] <= TType::I64) {
+            $paramType = 'int';
+        } else if ($arg['type'] == TType::LST) {
             $paramType                 = $arg['elem']['class'] . '[]';
             $argsStr                   = str_replace(
                 [
@@ -136,14 +144,14 @@ function methodTemplate(ReflectionMethod $method, $args, $results)
                 ],
                 $argsStr
             );
-            $methodParams[$arg['var']] = 'array';
+            $methodParams[$arg['var']] = 'array' . ' $' . $arg['var'];
         } else {
             $paramType = '';
         }
 
         $paramsNote .= '     * @param ' . $paramType . ' $' . $arg['var'] . PHP_EOL;
     }
-    foreach ($results as $arg) {
+    foreach ($resultsData as $arg) {
         $resultStr =
             str_replace('\'type\' => ' . $arg['type'], '\'type\' => TType::' . $types[$arg['type']], $resultStr);
         $resultStr = preg_replace('/=> \n\s+array \\(/', '=> array(', $resultStr);
@@ -152,11 +160,13 @@ function methodTemplate(ReflectionMethod $method, $args, $results)
         if ($arg['var'] == 'success') {
             if (isset($arg['class'])) {
                 $returnNote = $arg['class'];
-            } else if ($arg['type'] == \Thrift\Type\TType::BOOL) {
+            } else if ($arg['type'] == TType::BOOL) {
                 $returnNote = 'bool';
-            } else if ($arg['type'] == \Thrift\Type\TType::STRING) {
+            } else if ($arg['type'] == TType::STRING) {
                 $returnNote = 'string';
-            } else if ($arg['type'] == \Thrift\Type\TType::LST) {
+            } else if ($arg['type'] >= TType::DOUBLE && $arg['type'] <= TType::I64) {
+                $returnNote = 'int';
+            } else if ($arg['type'] == TType::LST) {
                 $returnNote = $arg['elem']['class'] . '[]';
 
                 $resultStr = str_replace(
@@ -174,19 +184,8 @@ function methodTemplate(ReflectionMethod $method, $args, $results)
         }
     }
 
-    //函数名称
-    $methodName = $method->getName();
-
     //函数参数
-    $params = [];
-    foreach ($methodParams as $param => $type) {
-        if ($type) {
-            $params[] = $type . ' $' . $param;
-        } else {
-            $params[] = '$' . $param;
-        }
-    }
-    $methodParams = implode(', ', $params);
+    $methodParams = implode(', ', $methodParams);
 
     $paramsNote = rtrim($paramsNote);
 
