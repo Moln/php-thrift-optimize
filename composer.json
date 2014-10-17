@@ -1,0 +1,11 @@
+{
+    "name": "giant/test",
+    "require": {
+	"apache/thrift": "1.0.*@dev"
+    },
+    "autoload":{
+        "files" : [
+
+        ]
+    }
+}

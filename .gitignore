@@ -1,0 +1,7 @@
+# Composer files
+composer.phar
+composer.lock
+vendor/
+source/
+gen-php/
+.idea/
