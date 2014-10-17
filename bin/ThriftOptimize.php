@@ -43,7 +43,7 @@ $c1 = get_declared_classes();
 include_once $serviceFile;
 $c2 = get_declared_classes();
 include_once $typesFile;
-$c3 = get_declared_classes();
+$c3           = get_declared_classes();
 $typesClasses = array_diff($c3, $c2);
 
 if (!class_exists($serviceClass)) {
@@ -103,42 +103,73 @@ function methodTemplate(ReflectionMethod $method, $args, $results)
     }
 
     //参数和返回变量
-    $argsStr   = var_export($args, true);
-    $resultStr = var_export($results, true);
+    $argsStr      = var_export($args, true);
+    $resultStr    = var_export($results, true);
+    $methodParams = array(); //方法参数
 
     foreach ($args as $arg) {
+        $methodParams[$arg['var']] = null;
+
         $argsStr = str_replace('\'{{' . $arg['var'] . '}}\'', '$' . $arg['var'], $argsStr);
         $argsStr = str_replace('\'type\' => ' . $arg['type'], '\'type\' => TType::' . $types[$arg['type']], $argsStr);
         $argsStr = preg_replace('/=> \n\s+array \\(/i', '=> array(', $argsStr);
 
         //注释参数类型
         if (isset($arg['class'])) {
-            $type = $arg['class'];
+            $paramType                 = $arg['class'];
+            $classNames                = explode('\\', $paramType);
+            $methodParams[$arg['var']] = end($classNames);
         } else if ($arg['type'] == \Thrift\Type\TType::BOOL) {
-            $type = 'bool';
+            $paramType = 'bool';
         } else if ($arg['type'] == \Thrift\Type\TType::STRING) {
-            $type = 'string';
+            $paramType = 'string';
         } else if ($arg['type'] == \Thrift\Type\TType::LST) {
-            $type = 'array';
+            $paramType                 = $arg['elem']['class'] . '[]';
+            $argsStr                   = str_replace(
+                [
+                    '\'etype\' => ' . $arg['etype'],
+                    '\'type\' => ' . $arg['etype'],
+                ],
+                [
+                    '\'etype\' => TType::' . $types[$arg['etype']],
+                    '\'type\' => TType::' . $types[$arg['etype']],
+                ],
+                $argsStr
+            );
+            $methodParams[$arg['var']] = 'array';
         } else {
-            $type = '';
+            $paramType = '';
         }
 
-        $paramsNote .= '     * @param ' . $type . ' $' . $arg['var'] . PHP_EOL;
+        $paramsNote .= '     * @param ' . $paramType . ' $' . $arg['var'] . PHP_EOL;
     }
-    foreach ($results as $val) {
+    foreach ($results as $arg) {
         $resultStr =
-            str_replace('\'type\' => ' . $val['type'], '\'type\' => TType::' . $types[$val['type']], $resultStr);
+            str_replace('\'type\' => ' . $arg['type'], '\'type\' => TType::' . $types[$arg['type']], $resultStr);
         $resultStr = preg_replace('/=> \n\s+array \\(/', '=> array(', $resultStr);
 
         //注释返回类型
-        if ($val['var'] == 'success') {
-            if (isset($val['class'])) {
-                $returnNote = $val['class'];
-            } else if ($val['type'] == \Thrift\Type\TType::BOOL) {
+        if ($arg['var'] == 'success') {
+            if (isset($arg['class'])) {
+                $returnNote = $arg['class'];
+            } else if ($arg['type'] == \Thrift\Type\TType::BOOL) {
                 $returnNote = 'bool';
-            } else if ($val['type'] == \Thrift\Type\TType::STRING) {
+            } else if ($arg['type'] == \Thrift\Type\TType::STRING) {
                 $returnNote = 'string';
+            } else if ($arg['type'] == \Thrift\Type\TType::LST) {
+                $returnNote = $arg['elem']['class'] . '[]';
+
+                $resultStr = str_replace(
+                    [
+                        '\'etype\' => ' . $arg['etype'],
+                        '\'type\' => ' . $arg['etype'],
+                    ],
+                    [
+                        '\'etype\' => TType::' . $types[$arg['etype']],
+                        '\'type\' => TType::' . $types[$arg['etype']],
+                    ],
+                    $resultStr
+                );
             }
         }
     }
@@ -148,15 +179,14 @@ function methodTemplate(ReflectionMethod $method, $args, $results)
 
     //函数参数
     $params = [];
-    foreach ($method->getParameters() as $param) {
-        if ($param->getClass()) {
-            $classNames = explode('\\', $param->getClass()->getName());
-            $params[]   = end($classNames) . ' $' . $param->getName();
+    foreach ($methodParams as $param => $type) {
+        if ($type) {
+            $params[] = $type . ' $' . $param;
         } else {
-            $params[] = '$' . $param->getName();
+            $params[] = '$' . $param;
         }
     }
-    $params = implode(', ', $params);
+    $methodParams = implode(', ', $params);
 
     $paramsNote = rtrim($paramsNote);
 
@@ -166,7 +196,7 @@ function methodTemplate(ReflectionMethod $method, $args, $results)
 $paramsNote
      * @return $returnNote
      */
-    public function $methodName($params)
+    public function $methodName($methodParams)
     {
         \$args   = $argsStr;
         \$result = $resultStr;
@@ -178,7 +208,7 @@ $paramsNote
 EOT;
 
     $interfaceTpl = <<<EOT
-    public function $methodName($params);
+    public function $methodName($methodParams);
 
 EOT;
 
@@ -196,7 +226,7 @@ function get_types_constans()
 
 function mkdirs($path, $mode = 0777)
 {
-    $paths  = explode(
+    $paths = explode(
         DIRECTORY_SEPARATOR,
         str_replace(array('/', '\\'), DIRECTORY_SEPARATOR, trim($path, '/\/'))
     );

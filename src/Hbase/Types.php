@@ -18,2687 +18,994 @@ use Thrift\Exception\TApplicationException;
 
 
 final class TDeleteType {
-    const DELETE_COLUMN = 0;
-    const DELETE_COLUMNS = 1;
-    static public $__names = array(
-        0 => 'DELETE_COLUMN',
-        1 => 'DELETE_COLUMNS',
-    );
+  const DELETE_COLUMN = 0;
+  const DELETE_COLUMNS = 1;
+  static public $__names = array(
+    0 => 'DELETE_COLUMN',
+    1 => 'DELETE_COLUMNS',
+  );
 }
 
 final class TDurability {
-    const SKIP_WAL = 1;
-    const ASYNC_WAL = 2;
-    const SYNC_WAL = 3;
-    const FSYNC_WAL = 4;
-    static public $__names = array(
-        1 => 'SKIP_WAL',
-        2 => 'ASYNC_WAL',
-        3 => 'SYNC_WAL',
-        4 => 'FSYNC_WAL',
-    );
+  const SKIP_WAL = 1;
+  const ASYNC_WAL = 2;
+  const SYNC_WAL = 3;
+  const FSYNC_WAL = 4;
+  static public $__names = array(
+    1 => 'SKIP_WAL',
+    2 => 'ASYNC_WAL',
+    3 => 'SYNC_WAL',
+    4 => 'FSYNC_WAL',
+  );
 }
 
 class TTimeRange {
-    static $_TSPEC;
+  static $_TSPEC;
 
-    public $minStamp = null;
-    public $maxStamp = null;
+  public $minStamp = null;
+  public $maxStamp = null;
 
-    public function __construct($vals=null) {
-        if (!isset(self::$_TSPEC)) {
-            self::$_TSPEC = array(
-                1 => array(
-                    'var' => 'minStamp',
-                    'type' => TType::I64,
-                ),
-                2 => array(
-                    'var' => 'maxStamp',
-                    'type' => TType::I64,
-                ),
-            );
-        }
-        if (is_array($vals)) {
-            if (isset($vals['minStamp'])) {
-                $this->minStamp = $vals['minStamp'];
-            }
-            if (isset($vals['maxStamp'])) {
-                $this->maxStamp = $vals['maxStamp'];
-            }
-        }
+  public function __construct($vals=null) {
+    if (!isset(self::$_TSPEC)) {
+      self::$_TSPEC = array(
+        1 => array(
+          'var' => 'minStamp',
+          'type' => TType::I64,
+          ),
+        2 => array(
+          'var' => 'maxStamp',
+          'type' => TType::I64,
+          ),
+        );
     }
-
-    public function getName() {
-        return 'TTimeRange';
+    if (is_array($vals)) {
+      if (isset($vals['minStamp'])) {
+        $this->minStamp = $vals['minStamp'];
+      }
+      if (isset($vals['maxStamp'])) {
+        $this->maxStamp = $vals['maxStamp'];
+      }
     }
+  }
 
-    public function read($input)
-    {
-        $xfer = 0;
-        $fname = null;
-        $ftype = 0;
-        $fid = 0;
-        $xfer += $input->readStructBegin($fname);
-        while (true)
-        {
-            $xfer += $input->readFieldBegin($fname, $ftype, $fid);
-            if ($ftype == TType::STOP) {
-                break;
-            }
-            switch ($fid)
-            {
-                case 1:
-                    if ($ftype == TType::I64) {
-                        $xfer += $input->readI64($this->minStamp);
-                    } else {
-                        $xfer += $input->skip($ftype);
-                    }
-                    break;
-                case 2:
-                    if ($ftype == TType::I64) {
-                        $xfer += $input->readI64($this->maxStamp);
-                    } else {
-                        $xfer += $input->skip($ftype);
-                    }
-                    break;
-                default:
-                    $xfer += $input->skip($ftype);
-                    break;
-            }
-            $xfer += $input->readFieldEnd();
-        }
-        $xfer += $input->readStructEnd();
-        return $xfer;
-    }
+  public function getName() {
+    return 'TTimeRange';
+  }
 
-    public function write($output) {
-        $xfer = 0;
-        $xfer += $output->writeStructBegin('TTimeRange');
-        if ($this->minStamp !== null) {
-            $xfer += $output->writeFieldBegin('minStamp', TType::I64, 1);
-            $xfer += $output->writeI64($this->minStamp);
-            $xfer += $output->writeFieldEnd();
-        }
-        if ($this->maxStamp !== null) {
-            $xfer += $output->writeFieldBegin('maxStamp', TType::I64, 2);
-            $xfer += $output->writeI64($this->maxStamp);
-            $xfer += $output->writeFieldEnd();
-        }
-        $xfer += $output->writeFieldStop();
-        $xfer += $output->writeStructEnd();
-        return $xfer;
-    }
+
 
 }
 
 class TColumn {
-    static $_TSPEC;
+  static $_TSPEC;
 
-    public $family = null;
-    public $qualifier = null;
-    public $timestamp = null;
+  public $family = null;
+  public $qualifier = null;
+  public $timestamp = null;
 
-    public function __construct($vals=null) {
-        if (!isset(self::$_TSPEC)) {
-            self::$_TSPEC = array(
-                1 => array(
-                    'var' => 'family',
-                    'type' => TType::STRING,
-                ),
-                2 => array(
-                    'var' => 'qualifier',
-                    'type' => TType::STRING,
-                ),
-                3 => array(
-                    'var' => 'timestamp',
-                    'type' => TType::I64,
-                ),
-            );
-        }
-        if (is_array($vals)) {
-            if (isset($vals['family'])) {
-                $this->family = $vals['family'];
-            }
-            if (isset($vals['qualifier'])) {
-                $this->qualifier = $vals['qualifier'];
-            }
-            if (isset($vals['timestamp'])) {
-                $this->timestamp = $vals['timestamp'];
-            }
-        }
+  public function __construct($vals=null) {
+    if (!isset(self::$_TSPEC)) {
+      self::$_TSPEC = array(
+        1 => array(
+          'var' => 'family',
+          'type' => TType::STRING,
+          ),
+        2 => array(
+          'var' => 'qualifier',
+          'type' => TType::STRING,
+          ),
+        3 => array(
+          'var' => 'timestamp',
+          'type' => TType::I64,
+          ),
+        );
     }
-
-    public function getName() {
-        return 'TColumn';
+    if (is_array($vals)) {
+      if (isset($vals['family'])) {
+        $this->family = $vals['family'];
+      }
+      if (isset($vals['qualifier'])) {
+        $this->qualifier = $vals['qualifier'];
+      }
+      if (isset($vals['timestamp'])) {
+        $this->timestamp = $vals['timestamp'];
+      }
     }
+  }
 
-    public function read($input)
-    {
-        $xfer = 0;
-        $fname = null;
-        $ftype = 0;
-        $fid = 0;
-        $xfer += $input->readStructBegin($fname);
-        while (true)
-        {
-            $xfer += $input->readFieldBegin($fname, $ftype, $fid);
-            if ($ftype == TType::STOP) {
-                break;
-            }
-            switch ($fid)
-            {
-                case 1:
-                    if ($ftype == TType::STRING) {
-                        $xfer += $input->readString($this->family);
-                    } else {
-                        $xfer += $input->skip($ftype);
-                    }
-                    break;
-                case 2:
-                    if ($ftype == TType::STRING) {
-                        $xfer += $input->readString($this->qualifier);
-                    } else {
-                        $xfer += $input->skip($ftype);
-                    }
-                    break;
-                case 3:
-                    if ($ftype == TType::I64) {
-                        $xfer += $input->readI64($this->timestamp);
-                    } else {
-                        $xfer += $input->skip($ftype);
-                    }
-                    break;
-                default:
-                    $xfer += $input->skip($ftype);
-                    break;
-            }
-            $xfer += $input->readFieldEnd();
-        }
-        $xfer += $input->readStructEnd();
-        return $xfer;
-    }
+  public function getName() {
+    return 'TColumn';
+  }
 
-    public function write($output) {
-        $xfer = 0;
-        $xfer += $output->writeStructBegin('TColumn');
-        if ($this->family !== null) {
-            $xfer += $output->writeFieldBegin('family', TType::STRING, 1);
-            $xfer += $output->writeString($this->family);
-            $xfer += $output->writeFieldEnd();
-        }
-        if ($this->qualifier !== null) {
-            $xfer += $output->writeFieldBegin('qualifier', TType::STRING, 2);
-            $xfer += $output->writeString($this->qualifier);
-            $xfer += $output->writeFieldEnd();
-        }
-        if ($this->timestamp !== null) {
-            $xfer += $output->writeFieldBegin('timestamp', TType::I64, 3);
-            $xfer += $output->writeI64($this->timestamp);
-            $xfer += $output->writeFieldEnd();
-        }
-        $xfer += $output->writeFieldStop();
-        $xfer += $output->writeStructEnd();
-        return $xfer;
-    }
+
 
 }
 
 class TColumnValue {
-    static $_TSPEC;
+  static $_TSPEC;
 
-    public $family = null;
-    public $qualifier = null;
-    public $value = null;
-    public $timestamp = null;
-    public $tags = null;
+  public $family = null;
+  public $qualifier = null;
+  public $value = null;
+  public $timestamp = null;
+  public $tags = null;
 
-    public function __construct($vals=null) {
-        if (!isset(self::$_TSPEC)) {
-            self::$_TSPEC = array(
-                1 => array(
-                    'var' => 'family',
-                    'type' => TType::STRING,
-                ),
-                2 => array(
-                    'var' => 'qualifier',
-                    'type' => TType::STRING,
-                ),
-                3 => array(
-                    'var' => 'value',
-                    'type' => TType::STRING,
-                ),
-                4 => array(
-                    'var' => 'timestamp',
-                    'type' => TType::I64,
-                ),
-                5 => array(
-                    'var' => 'tags',
-                    'type' => TType::STRING,
-                ),
-            );
-        }
-        if (is_array($vals)) {
-            if (isset($vals['family'])) {
-                $this->family = $vals['family'];
-            }
-            if (isset($vals['qualifier'])) {
-                $this->qualifier = $vals['qualifier'];
-            }
-            if (isset($vals['value'])) {
-                $this->value = $vals['value'];
-            }
-            if (isset($vals['timestamp'])) {
-                $this->timestamp = $vals['timestamp'];
-            }
-            if (isset($vals['tags'])) {
-                $this->tags = $vals['tags'];
-            }
-        }
+  public function __construct($vals=null) {
+    if (!isset(self::$_TSPEC)) {
+      self::$_TSPEC = array(
+        1 => array(
+          'var' => 'family',
+          'type' => TType::STRING,
+          ),
+        2 => array(
+          'var' => 'qualifier',
+          'type' => TType::STRING,
+          ),
+        3 => array(
+          'var' => 'value',
+          'type' => TType::STRING,
+          ),
+        4 => array(
+          'var' => 'timestamp',
+          'type' => TType::I64,
+          ),
+        5 => array(
+          'var' => 'tags',
+          'type' => TType::STRING,
+          ),
+        );
     }
-
-    public function getName() {
-        return 'TColumnValue';
+    if (is_array($vals)) {
+      if (isset($vals['family'])) {
+        $this->family = $vals['family'];
+      }
+      if (isset($vals['qualifier'])) {
+        $this->qualifier = $vals['qualifier'];
+      }
+      if (isset($vals['value'])) {
+        $this->value = $vals['value'];
+      }
+      if (isset($vals['timestamp'])) {
+        $this->timestamp = $vals['timestamp'];
+      }
+      if (isset($vals['tags'])) {
+        $this->tags = $vals['tags'];
+      }
     }
+  }
 
-    public function read($input)
-    {
-        $xfer = 0;
-        $fname = null;
-        $ftype = 0;
-        $fid = 0;
-        $xfer += $input->readStructBegin($fname);
-        while (true)
-        {
-            $xfer += $input->readFieldBegin($fname, $ftype, $fid);
-            if ($ftype == TType::STOP) {
-                break;
-            }
-            switch ($fid)
-            {
-                case 1:
-                    if ($ftype == TType::STRING) {
-                        $xfer += $input->readString($this->family);
-                    } else {
-                        $xfer += $input->skip($ftype);
-                    }
-                    break;
-                case 2:
-                    if ($ftype == TType::STRING) {
-                        $xfer += $input->readString($this->qualifier);
-                    } else {
-                        $xfer += $input->skip($ftype);
-                    }
-                    break;
-                case 3:
-                    if ($ftype == TType::STRING) {
-                        $xfer += $input->readString($this->value);
-                    } else {
-                        $xfer += $input->skip($ftype);
-                    }
-                    break;
-                case 4:
-                    if ($ftype == TType::I64) {
-                        $xfer += $input->readI64($this->timestamp);
-                    } else {
-                        $xfer += $input->skip($ftype);
-                    }
-                    break;
-                case 5:
-                    if ($ftype == TType::STRING) {
-                        $xfer += $input->readString($this->tags);
-                    } else {
-                        $xfer += $input->skip($ftype);
-                    }
-                    break;
-                default:
-                    $xfer += $input->skip($ftype);
-                    break;
-            }
-            $xfer += $input->readFieldEnd();
-        }
-        $xfer += $input->readStructEnd();
-        return $xfer;
-    }
+  public function getName() {
+    return 'TColumnValue';
+  }
 
-    public function write($output) {
-        $xfer = 0;
-        $xfer += $output->writeStructBegin('TColumnValue');
-        if ($this->family !== null) {
-            $xfer += $output->writeFieldBegin('family', TType::STRING, 1);
-            $xfer += $output->writeString($this->family);
-            $xfer += $output->writeFieldEnd();
-        }
-        if ($this->qualifier !== null) {
-            $xfer += $output->writeFieldBegin('qualifier', TType::STRING, 2);
-            $xfer += $output->writeString($this->qualifier);
-            $xfer += $output->writeFieldEnd();
-        }
-        if ($this->value !== null) {
-            $xfer += $output->writeFieldBegin('value', TType::STRING, 3);
-            $xfer += $output->writeString($this->value);
-            $xfer += $output->writeFieldEnd();
-        }
-        if ($this->timestamp !== null) {
-            $xfer += $output->writeFieldBegin('timestamp', TType::I64, 4);
-            $xfer += $output->writeI64($this->timestamp);
-            $xfer += $output->writeFieldEnd();
-        }
-        if ($this->tags !== null) {
-            $xfer += $output->writeFieldBegin('tags', TType::STRING, 5);
-            $xfer += $output->writeString($this->tags);
-            $xfer += $output->writeFieldEnd();
-        }
-        $xfer += $output->writeFieldStop();
-        $xfer += $output->writeStructEnd();
-        return $xfer;
-    }
+
 
 }
 
 class TColumnIncrement {
-    static $_TSPEC;
+  static $_TSPEC;
 
-    public $family = null;
-    public $qualifier = null;
-    public $amount = 1;
+  public $family = null;
+  public $qualifier = null;
+  public $amount = 1;
 
-    public function __construct($vals=null) {
-        if (!isset(self::$_TSPEC)) {
-            self::$_TSPEC = array(
-                1 => array(
-                    'var' => 'family',
-                    'type' => TType::STRING,
-                ),
-                2 => array(
-                    'var' => 'qualifier',
-                    'type' => TType::STRING,
-                ),
-                3 => array(
-                    'var' => 'amount',
-                    'type' => TType::I64,
-                ),
-            );
-        }
-        if (is_array($vals)) {
-            if (isset($vals['family'])) {
-                $this->family = $vals['family'];
-            }
-            if (isset($vals['qualifier'])) {
-                $this->qualifier = $vals['qualifier'];
-            }
-            if (isset($vals['amount'])) {
-                $this->amount = $vals['amount'];
-            }
-        }
+  public function __construct($vals=null) {
+    if (!isset(self::$_TSPEC)) {
+      self::$_TSPEC = array(
+        1 => array(
+          'var' => 'family',
+          'type' => TType::STRING,
+          ),
+        2 => array(
+          'var' => 'qualifier',
+          'type' => TType::STRING,
+          ),
+        3 => array(
+          'var' => 'amount',
+          'type' => TType::I64,
+          ),
+        );
     }
-
-    public function getName() {
-        return 'TColumnIncrement';
+    if (is_array($vals)) {
+      if (isset($vals['family'])) {
+        $this->family = $vals['family'];
+      }
+      if (isset($vals['qualifier'])) {
+        $this->qualifier = $vals['qualifier'];
+      }
+      if (isset($vals['amount'])) {
+        $this->amount = $vals['amount'];
+      }
     }
+  }
 
-    public function read($input)
-    {
-        $xfer = 0;
-        $fname = null;
-        $ftype = 0;
-        $fid = 0;
-        $xfer += $input->readStructBegin($fname);
-        while (true)
-        {
-            $xfer += $input->readFieldBegin($fname, $ftype, $fid);
-            if ($ftype == TType::STOP) {
-                break;
-            }
-            switch ($fid)
-            {
-                case 1:
-                    if ($ftype == TType::STRING) {
-                        $xfer += $input->readString($this->family);
-                    } else {
-                        $xfer += $input->skip($ftype);
-                    }
-                    break;
-                case 2:
-                    if ($ftype == TType::STRING) {
-                        $xfer += $input->readString($this->qualifier);
-                    } else {
-                        $xfer += $input->skip($ftype);
-                    }
-                    break;
-                case 3:
-                    if ($ftype == TType::I64) {
-                        $xfer += $input->readI64($this->amount);
-                    } else {
-                        $xfer += $input->skip($ftype);
-                    }
-                    break;
-                default:
-                    $xfer += $input->skip($ftype);
-                    break;
-            }
-            $xfer += $input->readFieldEnd();
-        }
-        $xfer += $input->readStructEnd();
-        return $xfer;
-    }
+  public function getName() {
+    return 'TColumnIncrement';
+  }
 
-    public function write($output) {
-        $xfer = 0;
-        $xfer += $output->writeStructBegin('TColumnIncrement');
-        if ($this->family !== null) {
-            $xfer += $output->writeFieldBegin('family', TType::STRING, 1);
-            $xfer += $output->writeString($this->family);
-            $xfer += $output->writeFieldEnd();
-        }
-        if ($this->qualifier !== null) {
-            $xfer += $output->writeFieldBegin('qualifier', TType::STRING, 2);
-            $xfer += $output->writeString($this->qualifier);
-            $xfer += $output->writeFieldEnd();
-        }
-        if ($this->amount !== null) {
-            $xfer += $output->writeFieldBegin('amount', TType::I64, 3);
-            $xfer += $output->writeI64($this->amount);
-            $xfer += $output->writeFieldEnd();
-        }
-        $xfer += $output->writeFieldStop();
-        $xfer += $output->writeStructEnd();
-        return $xfer;
-    }
+
 
 }
 
 class TResult {
-    static $_TSPEC;
+  static $_TSPEC;
 
-    public $row = null;
-    public $columnValues = null;
+  public $row = null;
+  public $columnValues = null;
 
-    public function __construct($vals=null) {
-        if (!isset(self::$_TSPEC)) {
-            self::$_TSPEC = array(
-                1 => array(
-                    'var' => 'row',
-                    'type' => TType::STRING,
-                ),
-                2 => array(
-                    'var' => 'columnValues',
-                    'type' => TType::LST,
-                    'etype' => TType::STRUCT,
-                    'elem' => array(
-                        'type' => TType::STRUCT,
-                        'class' => '\Hbase\TColumnValue',
-                    ),
-                ),
-            );
-        }
-        if (is_array($vals)) {
-            if (isset($vals['row'])) {
-                $this->row = $vals['row'];
-            }
-            if (isset($vals['columnValues'])) {
-                $this->columnValues = $vals['columnValues'];
-            }
-        }
+  public function __construct($vals=null) {
+    if (!isset(self::$_TSPEC)) {
+      self::$_TSPEC = array(
+        1 => array(
+          'var' => 'row',
+          'type' => TType::STRING,
+          ),
+        2 => array(
+          'var' => 'columnValues',
+          'type' => TType::LST,
+          'etype' => TType::STRUCT,
+          'elem' => array(
+            'type' => TType::STRUCT,
+            'class' => '\Hbase\TColumnValue',
+            ),
+          ),
+        );
     }
-
-    public function getName() {
-        return 'TResult';
+    if (is_array($vals)) {
+      if (isset($vals['row'])) {
+        $this->row = $vals['row'];
+      }
+      if (isset($vals['columnValues'])) {
+        $this->columnValues = $vals['columnValues'];
+      }
     }
+  }
 
-    public function read($input)
-    {
-        $xfer = 0;
-        $fname = null;
-        $ftype = 0;
-        $fid = 0;
-        $xfer += $input->readStructBegin($fname);
-        while (true)
-        {
-            $xfer += $input->readFieldBegin($fname, $ftype, $fid);
-            if ($ftype == TType::STOP) {
-                break;
-            }
-            switch ($fid)
-            {
-                case 1:
-                    if ($ftype == TType::STRING) {
-                        $xfer += $input->readString($this->row);
-                    } else {
-                        $xfer += $input->skip($ftype);
-                    }
-                    break;
-                case 2:
-                    if ($ftype == TType::LST) {
-                        $this->columnValues = array();
-                        $_size0 = 0;
-                        $_etype3 = 0;
-                        $xfer += $input->readListBegin($_etype3, $_size0);
-                        for ($_i4 = 0; $_i4 < $_size0; ++$_i4)
-                        {
-                            $elem5 = null;
-                            $elem5 = new \Hbase\TColumnValue();
-                            $xfer += $elem5->read($input);
-                            $this->columnValues []= $elem5;
-                        }
-                        $xfer += $input->readListEnd();
-                    } else {
-                        $xfer += $input->skip($ftype);
-                    }
-                    break;
-                default:
-                    $xfer += $input->skip($ftype);
-                    break;
-            }
-            $xfer += $input->readFieldEnd();
-        }
-        $xfer += $input->readStructEnd();
-        return $xfer;
-    }
+  public function getName() {
+    return 'TResult';
+  }
 
-    public function write($output) {
-        $xfer = 0;
-        $xfer += $output->writeStructBegin('TResult');
-        if ($this->row !== null) {
-            $xfer += $output->writeFieldBegin('row', TType::STRING, 1);
-            $xfer += $output->writeString($this->row);
-            $xfer += $output->writeFieldEnd();
-        }
-        if ($this->columnValues !== null) {
-            if (!is_array($this->columnValues)) {
-                throw new TProtocolException('Bad type in structure.', TProtocolException::INVALID_DATA);
-            }
-            $xfer += $output->writeFieldBegin('columnValues', TType::LST, 2);
-            {
-                $output->writeListBegin(TType::STRUCT, count($this->columnValues));
-                {
-                    foreach ($this->columnValues as $iter6)
-                    {
-                        $xfer += $iter6->write($output);
-                    }
-                }
-                $output->writeListEnd();
-            }
-            $xfer += $output->writeFieldEnd();
-        }
-        $xfer += $output->writeFieldStop();
-        $xfer += $output->writeStructEnd();
-        return $xfer;
-    }
+
 
 }
 
 class TAuthorization {
-    static $_TSPEC;
+  static $_TSPEC;
 
-    public $labels = null;
+  public $labels = null;
 
-    public function __construct($vals=null) {
-        if (!isset(self::$_TSPEC)) {
-            self::$_TSPEC = array(
-                1 => array(
-                    'var' => 'labels',
-                    'type' => TType::LST,
-                    'etype' => TType::STRING,
-                    'elem' => array(
-                        'type' => TType::STRING,
-                    ),
-                ),
-            );
-        }
-        if (is_array($vals)) {
-            if (isset($vals['labels'])) {
-                $this->labels = $vals['labels'];
-            }
-        }
+  public function __construct($vals=null) {
+    if (!isset(self::$_TSPEC)) {
+      self::$_TSPEC = array(
+        1 => array(
+          'var' => 'labels',
+          'type' => TType::LST,
+          'etype' => TType::STRING,
+          'elem' => array(
+            'type' => TType::STRING,
+            ),
+          ),
+        );
     }
-
-    public function getName() {
-        return 'TAuthorization';
+    if (is_array($vals)) {
+      if (isset($vals['labels'])) {
+        $this->labels = $vals['labels'];
+      }
     }
+  }
 
-    public function read($input)
-    {
-        $xfer = 0;
-        $fname = null;
-        $ftype = 0;
-        $fid = 0;
-        $xfer += $input->readStructBegin($fname);
-        while (true)
-        {
-            $xfer += $input->readFieldBegin($fname, $ftype, $fid);
-            if ($ftype == TType::STOP) {
-                break;
-            }
-            switch ($fid)
-            {
-                case 1:
-                    if ($ftype == TType::LST) {
-                        $this->labels = array();
-                        $_size7 = 0;
-                        $_etype10 = 0;
-                        $xfer += $input->readListBegin($_etype10, $_size7);
-                        for ($_i11 = 0; $_i11 < $_size7; ++$_i11)
-                        {
-                            $elem12 = null;
-                            $xfer += $input->readString($elem12);
-                            $this->labels []= $elem12;
-                        }
-                        $xfer += $input->readListEnd();
-                    } else {
-                        $xfer += $input->skip($ftype);
-                    }
-                    break;
-                default:
-                    $xfer += $input->skip($ftype);
-                    break;
-            }
-            $xfer += $input->readFieldEnd();
-        }
-        $xfer += $input->readStructEnd();
-        return $xfer;
-    }
+  public function getName() {
+    return 'TAuthorization';
+  }
 
-    public function write($output) {
-        $xfer = 0;
-        $xfer += $output->writeStructBegin('TAuthorization');
-        if ($this->labels !== null) {
-            if (!is_array($this->labels)) {
-                throw new TProtocolException('Bad type in structure.', TProtocolException::INVALID_DATA);
-            }
-            $xfer += $output->writeFieldBegin('labels', TType::LST, 1);
-            {
-                $output->writeListBegin(TType::STRING, count($this->labels));
-                {
-                    foreach ($this->labels as $iter13)
-                    {
-                        $xfer += $output->writeString($iter13);
-                    }
-                }
-                $output->writeListEnd();
-            }
-            $xfer += $output->writeFieldEnd();
-        }
-        $xfer += $output->writeFieldStop();
-        $xfer += $output->writeStructEnd();
-        return $xfer;
-    }
+
 
 }
 
 class TCellVisibility {
-    static $_TSPEC;
+  static $_TSPEC;
 
-    public $expression = null;
+  public $expression = null;
 
-    public function __construct($vals=null) {
-        if (!isset(self::$_TSPEC)) {
-            self::$_TSPEC = array(
-                1 => array(
-                    'var' => 'expression',
-                    'type' => TType::STRING,
-                ),
-            );
-        }
-        if (is_array($vals)) {
-            if (isset($vals['expression'])) {
-                $this->expression = $vals['expression'];
-            }
-        }
+  public function __construct($vals=null) {
+    if (!isset(self::$_TSPEC)) {
+      self::$_TSPEC = array(
+        1 => array(
+          'var' => 'expression',
+          'type' => TType::STRING,
+          ),
+        );
     }
-
-    public function getName() {
-        return 'TCellVisibility';
+    if (is_array($vals)) {
+      if (isset($vals['expression'])) {
+        $this->expression = $vals['expression'];
+      }
     }
+  }
 
-    public function read($input)
-    {
-        $xfer = 0;
-        $fname = null;
-        $ftype = 0;
-        $fid = 0;
-        $xfer += $input->readStructBegin($fname);
-        while (true)
-        {
-            $xfer += $input->readFieldBegin($fname, $ftype, $fid);
-            if ($ftype == TType::STOP) {
-                break;
-            }
-            switch ($fid)
-            {
-                case 1:
-                    if ($ftype == TType::STRING) {
-                        $xfer += $input->readString($this->expression);
-                    } else {
-                        $xfer += $input->skip($ftype);
-                    }
-                    break;
-                default:
-                    $xfer += $input->skip($ftype);
-                    break;
-            }
-            $xfer += $input->readFieldEnd();
-        }
-        $xfer += $input->readStructEnd();
-        return $xfer;
-    }
+  public function getName() {
+    return 'TCellVisibility';
+  }
 
-    public function write($output) {
-        $xfer = 0;
-        $xfer += $output->writeStructBegin('TCellVisibility');
-        if ($this->expression !== null) {
-            $xfer += $output->writeFieldBegin('expression', TType::STRING, 1);
-            $xfer += $output->writeString($this->expression);
-            $xfer += $output->writeFieldEnd();
-        }
-        $xfer += $output->writeFieldStop();
-        $xfer += $output->writeStructEnd();
-        return $xfer;
-    }
+
 
 }
 
 class TGet {
-    static $_TSPEC;
+  static $_TSPEC;
 
-    public $row = null;
-    public $columns = null;
-    public $timestamp = null;
-    public $timeRange = null;
-    public $maxVersions = null;
-    public $filterString = null;
-    public $attributes = null;
-    public $authorizations = null;
+  public $row = null;
+  public $columns = null;
+  public $timestamp = null;
+  public $timeRange = null;
+  public $maxVersions = null;
+  public $filterString = null;
+  public $attributes = null;
+  public $authorizations = null;
 
-    public function __construct($vals=null) {
-        if (!isset(self::$_TSPEC)) {
-            self::$_TSPEC = array(
-                1 => array(
-                    'var' => 'row',
-                    'type' => TType::STRING,
-                ),
-                2 => array(
-                    'var' => 'columns',
-                    'type' => TType::LST,
-                    'etype' => TType::STRUCT,
-                    'elem' => array(
-                        'type' => TType::STRUCT,
-                        'class' => '\Hbase\TColumn',
-                    ),
-                ),
-                3 => array(
-                    'var' => 'timestamp',
-                    'type' => TType::I64,
-                ),
-                4 => array(
-                    'var' => 'timeRange',
-                    'type' => TType::STRUCT,
-                    'class' => '\Hbase\TTimeRange',
-                ),
-                5 => array(
-                    'var' => 'maxVersions',
-                    'type' => TType::I32,
-                ),
-                6 => array(
-                    'var' => 'filterString',
-                    'type' => TType::STRING,
-                ),
-                7 => array(
-                    'var' => 'attributes',
-                    'type' => TType::MAP,
-                    'ktype' => TType::STRING,
-                    'vtype' => TType::STRING,
-                    'key' => array(
-                        'type' => TType::STRING,
-                    ),
-                    'val' => array(
-                        'type' => TType::STRING,
-                    ),
-                ),
-                8 => array(
-                    'var' => 'authorizations',
-                    'type' => TType::STRUCT,
-                    'class' => '\Hbase\TAuthorization',
-                ),
-            );
-        }
-        if (is_array($vals)) {
-            if (isset($vals['row'])) {
-                $this->row = $vals['row'];
-            }
-            if (isset($vals['columns'])) {
-                $this->columns = $vals['columns'];
-            }
-            if (isset($vals['timestamp'])) {
-                $this->timestamp = $vals['timestamp'];
-            }
-            if (isset($vals['timeRange'])) {
-                $this->timeRange = $vals['timeRange'];
-            }
-            if (isset($vals['maxVersions'])) {
-                $this->maxVersions = $vals['maxVersions'];
-            }
-            if (isset($vals['filterString'])) {
-                $this->filterString = $vals['filterString'];
-            }
-            if (isset($vals['attributes'])) {
-                $this->attributes = $vals['attributes'];
-            }
-            if (isset($vals['authorizations'])) {
-                $this->authorizations = $vals['authorizations'];
-            }
-        }
+  public function __construct($vals=null) {
+    if (!isset(self::$_TSPEC)) {
+      self::$_TSPEC = array(
+        1 => array(
+          'var' => 'row',
+          'type' => TType::STRING,
+          ),
+        2 => array(
+          'var' => 'columns',
+          'type' => TType::LST,
+          'etype' => TType::STRUCT,
+          'elem' => array(
+            'type' => TType::STRUCT,
+            'class' => '\Hbase\TColumn',
+            ),
+          ),
+        3 => array(
+          'var' => 'timestamp',
+          'type' => TType::I64,
+          ),
+        4 => array(
+          'var' => 'timeRange',
+          'type' => TType::STRUCT,
+          'class' => '\Hbase\TTimeRange',
+          ),
+        5 => array(
+          'var' => 'maxVersions',
+          'type' => TType::I32,
+          ),
+        6 => array(
+          'var' => 'filterString',
+          'type' => TType::STRING,
+          ),
+        7 => array(
+          'var' => 'attributes',
+          'type' => TType::MAP,
+          'ktype' => TType::STRING,
+          'vtype' => TType::STRING,
+          'key' => array(
+            'type' => TType::STRING,
+          ),
+          'val' => array(
+            'type' => TType::STRING,
+            ),
+          ),
+        8 => array(
+          'var' => 'authorizations',
+          'type' => TType::STRUCT,
+          'class' => '\Hbase\TAuthorization',
+          ),
+        );
     }
-
-    public function getName() {
-        return 'TGet';
+    if (is_array($vals)) {
+      if (isset($vals['row'])) {
+        $this->row = $vals['row'];
+      }
+      if (isset($vals['columns'])) {
+        $this->columns = $vals['columns'];
+      }
+      if (isset($vals['timestamp'])) {
+        $this->timestamp = $vals['timestamp'];
+      }
+      if (isset($vals['timeRange'])) {
+        $this->timeRange = $vals['timeRange'];
+      }
+      if (isset($vals['maxVersions'])) {
+        $this->maxVersions = $vals['maxVersions'];
+      }
+      if (isset($vals['filterString'])) {
+        $this->filterString = $vals['filterString'];
+      }
+      if (isset($vals['attributes'])) {
+        $this->attributes = $vals['attributes'];
+      }
+      if (isset($vals['authorizations'])) {
+        $this->authorizations = $vals['authorizations'];
+      }
     }
+  }
 
-    public function read($input)
-    {
-        $xfer = 0;
-        $fname = null;
-        $ftype = 0;
-        $fid = 0;
-        $xfer += $input->readStructBegin($fname);
-        while (true)
-        {
-            $xfer += $input->readFieldBegin($fname, $ftype, $fid);
-            if ($ftype == TType::STOP) {
-                break;
-            }
-            switch ($fid)
-            {
-                case 1:
-                    if ($ftype == TType::STRING) {
-                        $xfer += $input->readString($this->row);
-                    } else {
-                        $xfer += $input->skip($ftype);
-                    }
-                    break;
-                case 2:
-                    if ($ftype == TType::LST) {
-                        $this->columns = array();
-                        $_size14 = 0;
-                        $_etype17 = 0;
-                        $xfer += $input->readListBegin($_etype17, $_size14);
-                        for ($_i18 = 0; $_i18 < $_size14; ++$_i18)
-                        {
-                            $elem19 = null;
-                            $elem19 = new \Hbase\TColumn();
-                            $xfer += $elem19->read($input);
-                            $this->columns []= $elem19;
-                        }
-                        $xfer += $input->readListEnd();
-                    } else {
-                        $xfer += $input->skip($ftype);
-                    }
-                    break;
-                case 3:
-                    if ($ftype == TType::I64) {
-                        $xfer += $input->readI64($this->timestamp);
-                    } else {
-                        $xfer += $input->skip($ftype);
-                    }
-                    break;
-                case 4:
-                    if ($ftype == TType::STRUCT) {
-                        $this->timeRange = new \Hbase\TTimeRange();
-                        $xfer += $this->timeRange->read($input);
-                    } else {
-                        $xfer += $input->skip($ftype);
-                    }
-                    break;
-                case 5:
-                    if ($ftype == TType::I32) {
-                        $xfer += $input->readI32($this->maxVersions);
-                    } else {
-                        $xfer += $input->skip($ftype);
-                    }
-                    break;
-                case 6:
-                    if ($ftype == TType::STRING) {
-                        $xfer += $input->readString($this->filterString);
-                    } else {
-                        $xfer += $input->skip($ftype);
-                    }
-                    break;
-                case 7:
-                    if ($ftype == TType::MAP) {
-                        $this->attributes = array();
-                        $_size20 = 0;
-                        $_ktype21 = 0;
-                        $_vtype22 = 0;
-                        $xfer += $input->readMapBegin($_ktype21, $_vtype22, $_size20);
-                        for ($_i24 = 0; $_i24 < $_size20; ++$_i24)
-                        {
-                            $key25 = '';
-                            $val26 = '';
-                            $xfer += $input->readString($key25);
-                            $xfer += $input->readString($val26);
-                            $this->attributes[$key25] = $val26;
-                        }
-                        $xfer += $input->readMapEnd();
-                    } else {
-                        $xfer += $input->skip($ftype);
-                    }
-                    break;
-                case 8:
-                    if ($ftype == TType::STRUCT) {
-                        $this->authorizations = new \Hbase\TAuthorization();
-                        $xfer += $this->authorizations->read($input);
-                    } else {
-                        $xfer += $input->skip($ftype);
-                    }
-                    break;
-                default:
-                    $xfer += $input->skip($ftype);
-                    break;
-            }
-            $xfer += $input->readFieldEnd();
-        }
-        $xfer += $input->readStructEnd();
-        return $xfer;
-    }
+  public function getName() {
+    return 'TGet';
+  }
 
-    public function write($output) {
-        $xfer = 0;
-        $xfer += $output->writeStructBegin('TGet');
-        if ($this->row !== null) {
-            $xfer += $output->writeFieldBegin('row', TType::STRING, 1);
-            $xfer += $output->writeString($this->row);
-            $xfer += $output->writeFieldEnd();
-        }
-        if ($this->columns !== null) {
-            if (!is_array($this->columns)) {
-                throw new TProtocolException('Bad type in structure.', TProtocolException::INVALID_DATA);
-            }
-            $xfer += $output->writeFieldBegin('columns', TType::LST, 2);
-            {
-                $output->writeListBegin(TType::STRUCT, count($this->columns));
-                {
-                    foreach ($this->columns as $iter27)
-                    {
-                        $xfer += $iter27->write($output);
-                    }
-                }
-                $output->writeListEnd();
-            }
-            $xfer += $output->writeFieldEnd();
-        }
-        if ($this->timestamp !== null) {
-            $xfer += $output->writeFieldBegin('timestamp', TType::I64, 3);
-            $xfer += $output->writeI64($this->timestamp);
-            $xfer += $output->writeFieldEnd();
-        }
-        if ($this->timeRange !== null) {
-            if (!is_object($this->timeRange)) {
-                throw new TProtocolException('Bad type in structure.', TProtocolException::INVALID_DATA);
-            }
-            $xfer += $output->writeFieldBegin('timeRange', TType::STRUCT, 4);
-            $xfer += $this->timeRange->write($output);
-            $xfer += $output->writeFieldEnd();
-        }
-        if ($this->maxVersions !== null) {
-            $xfer += $output->writeFieldBegin('maxVersions', TType::I32, 5);
-            $xfer += $output->writeI32($this->maxVersions);
-            $xfer += $output->writeFieldEnd();
-        }
-        if ($this->filterString !== null) {
-            $xfer += $output->writeFieldBegin('filterString', TType::STRING, 6);
-            $xfer += $output->writeString($this->filterString);
-            $xfer += $output->writeFieldEnd();
-        }
-        if ($this->attributes !== null) {
-            if (!is_array($this->attributes)) {
-                throw new TProtocolException('Bad type in structure.', TProtocolException::INVALID_DATA);
-            }
-            $xfer += $output->writeFieldBegin('attributes', TType::MAP, 7);
-            {
-                $output->writeMapBegin(TType::STRING, TType::STRING, count($this->attributes));
-                {
-                    foreach ($this->attributes as $kiter28 => $viter29)
-                    {
-                        $xfer += $output->writeString($kiter28);
-                        $xfer += $output->writeString($viter29);
-                    }
-                }
-                $output->writeMapEnd();
-            }
-            $xfer += $output->writeFieldEnd();
-        }
-        if ($this->authorizations !== null) {
-            if (!is_object($this->authorizations)) {
-                throw new TProtocolException('Bad type in structure.', TProtocolException::INVALID_DATA);
-            }
-            $xfer += $output->writeFieldBegin('authorizations', TType::STRUCT, 8);
-            $xfer += $this->authorizations->write($output);
-            $xfer += $output->writeFieldEnd();
-        }
-        $xfer += $output->writeFieldStop();
-        $xfer += $output->writeStructEnd();
-        return $xfer;
-    }
+
 
 }
 
 class TPut {
-    static $_TSPEC;
+  static $_TSPEC;
 
-    public $row = null;
-    public $columnValues = null;
-    public $timestamp = null;
-    public $attributes = null;
-    public $durability = null;
-    public $cellVisibility = null;
+  public $row = null;
+  public $columnValues = null;
+  public $timestamp = null;
+  public $attributes = null;
+  public $durability = null;
+  public $cellVisibility = null;
 
-    public function __construct($vals=null) {
-        if (!isset(self::$_TSPEC)) {
-            self::$_TSPEC = array(
-                1 => array(
-                    'var' => 'row',
-                    'type' => TType::STRING,
-                ),
-                2 => array(
-                    'var' => 'columnValues',
-                    'type' => TType::LST,
-                    'etype' => TType::STRUCT,
-                    'elem' => array(
-                        'type' => TType::STRUCT,
-                        'class' => '\Hbase\TColumnValue',
-                    ),
-                ),
-                3 => array(
-                    'var' => 'timestamp',
-                    'type' => TType::I64,
-                ),
-                5 => array(
-                    'var' => 'attributes',
-                    'type' => TType::MAP,
-                    'ktype' => TType::STRING,
-                    'vtype' => TType::STRING,
-                    'key' => array(
-                        'type' => TType::STRING,
-                    ),
-                    'val' => array(
-                        'type' => TType::STRING,
-                    ),
-                ),
-                6 => array(
-                    'var' => 'durability',
-                    'type' => TType::I32,
-                ),
-                7 => array(
-                    'var' => 'cellVisibility',
-                    'type' => TType::STRUCT,
-                    'class' => '\Hbase\TCellVisibility',
-                ),
-            );
-        }
-        if (is_array($vals)) {
-            if (isset($vals['row'])) {
-                $this->row = $vals['row'];
-            }
-            if (isset($vals['columnValues'])) {
-                $this->columnValues = $vals['columnValues'];
-            }
-            if (isset($vals['timestamp'])) {
-                $this->timestamp = $vals['timestamp'];
-            }
-            if (isset($vals['attributes'])) {
-                $this->attributes = $vals['attributes'];
-            }
-            if (isset($vals['durability'])) {
-                $this->durability = $vals['durability'];
-            }
-            if (isset($vals['cellVisibility'])) {
-                $this->cellVisibility = $vals['cellVisibility'];
-            }
-        }
+  public function __construct($vals=null) {
+    if (!isset(self::$_TSPEC)) {
+      self::$_TSPEC = array(
+        1 => array(
+          'var' => 'row',
+          'type' => TType::STRING,
+          ),
+        2 => array(
+          'var' => 'columnValues',
+          'type' => TType::LST,
+          'etype' => TType::STRUCT,
+          'elem' => array(
+            'type' => TType::STRUCT,
+            'class' => '\Hbase\TColumnValue',
+            ),
+          ),
+        3 => array(
+          'var' => 'timestamp',
+          'type' => TType::I64,
+          ),
+        5 => array(
+          'var' => 'attributes',
+          'type' => TType::MAP,
+          'ktype' => TType::STRING,
+          'vtype' => TType::STRING,
+          'key' => array(
+            'type' => TType::STRING,
+          ),
+          'val' => array(
+            'type' => TType::STRING,
+            ),
+          ),
+        6 => array(
+          'var' => 'durability',
+          'type' => TType::I32,
+          ),
+        7 => array(
+          'var' => 'cellVisibility',
+          'type' => TType::STRUCT,
+          'class' => '\Hbase\TCellVisibility',
+          ),
+        );
     }
-
-    public function getName() {
-        return 'TPut';
+    if (is_array($vals)) {
+      if (isset($vals['row'])) {
+        $this->row = $vals['row'];
+      }
+      if (isset($vals['columnValues'])) {
+        $this->columnValues = $vals['columnValues'];
+      }
+      if (isset($vals['timestamp'])) {
+        $this->timestamp = $vals['timestamp'];
+      }
+      if (isset($vals['attributes'])) {
+        $this->attributes = $vals['attributes'];
+      }
+      if (isset($vals['durability'])) {
+        $this->durability = $vals['durability'];
+      }
+      if (isset($vals['cellVisibility'])) {
+        $this->cellVisibility = $vals['cellVisibility'];
+      }
     }
+  }
 
-    public function read($input)
-    {
-        $xfer = 0;
-        $fname = null;
-        $ftype = 0;
-        $fid = 0;
-        $xfer += $input->readStructBegin($fname);
-        while (true)
-        {
-            $xfer += $input->readFieldBegin($fname, $ftype, $fid);
-            if ($ftype == TType::STOP) {
-                break;
-            }
-            switch ($fid)
-            {
-                case 1:
-                    if ($ftype == TType::STRING) {
-                        $xfer += $input->readString($this->row);
-                    } else {
-                        $xfer += $input->skip($ftype);
-                    }
-                    break;
-                case 2:
-                    if ($ftype == TType::LST) {
-                        $this->columnValues = array();
-                        $_size30 = 0;
-                        $_etype33 = 0;
-                        $xfer += $input->readListBegin($_etype33, $_size30);
-                        for ($_i34 = 0; $_i34 < $_size30; ++$_i34)
-                        {
-                            $elem35 = null;
-                            $elem35 = new \Hbase\TColumnValue();
-                            $xfer += $elem35->read($input);
-                            $this->columnValues []= $elem35;
-                        }
-                        $xfer += $input->readListEnd();
-                    } else {
-                        $xfer += $input->skip($ftype);
-                    }
-                    break;
-                case 3:
-                    if ($ftype == TType::I64) {
-                        $xfer += $input->readI64($this->timestamp);
-                    } else {
-                        $xfer += $input->skip($ftype);
-                    }
-                    break;
-                case 5:
-                    if ($ftype == TType::MAP) {
-                        $this->attributes = array();
-                        $_size36 = 0;
-                        $_ktype37 = 0;
-                        $_vtype38 = 0;
-                        $xfer += $input->readMapBegin($_ktype37, $_vtype38, $_size36);
-                        for ($_i40 = 0; $_i40 < $_size36; ++$_i40)
-                        {
-                            $key41 = '';
-                            $val42 = '';
-                            $xfer += $input->readString($key41);
-                            $xfer += $input->readString($val42);
-                            $this->attributes[$key41] = $val42;
-                        }
-                        $xfer += $input->readMapEnd();
-                    } else {
-                        $xfer += $input->skip($ftype);
-                    }
-                    break;
-                case 6:
-                    if ($ftype == TType::I32) {
-                        $xfer += $input->readI32($this->durability);
-                    } else {
-                        $xfer += $input->skip($ftype);
-                    }
-                    break;
-                case 7:
-                    if ($ftype == TType::STRUCT) {
-                        $this->cellVisibility = new \Hbase\TCellVisibility();
-                        $xfer += $this->cellVisibility->read($input);
-                    } else {
-                        $xfer += $input->skip($ftype);
-                    }
-                    break;
-                default:
-                    $xfer += $input->skip($ftype);
-                    break;
-            }
-            $xfer += $input->readFieldEnd();
-        }
-        $xfer += $input->readStructEnd();
-        return $xfer;
-    }
+  public function getName() {
+    return 'TPut';
+  }
 
-    public function write($output) {
-        $xfer = 0;
-        $xfer += $output->writeStructBegin('TPut');
-        if ($this->row !== null) {
-            $xfer += $output->writeFieldBegin('row', TType::STRING, 1);
-            $xfer += $output->writeString($this->row);
-            $xfer += $output->writeFieldEnd();
-        }
-        if ($this->columnValues !== null) {
-            if (!is_array($this->columnValues)) {
-                throw new TProtocolException('Bad type in structure.', TProtocolException::INVALID_DATA);
-            }
-            $xfer += $output->writeFieldBegin('columnValues', TType::LST, 2);
-            {
-                $output->writeListBegin(TType::STRUCT, count($this->columnValues));
-                {
-                    foreach ($this->columnValues as $iter43)
-                    {
-                        $xfer += $iter43->write($output);
-                    }
-                }
-                $output->writeListEnd();
-            }
-            $xfer += $output->writeFieldEnd();
-        }
-        if ($this->timestamp !== null) {
-            $xfer += $output->writeFieldBegin('timestamp', TType::I64, 3);
-            $xfer += $output->writeI64($this->timestamp);
-            $xfer += $output->writeFieldEnd();
-        }
-        if ($this->attributes !== null) {
-            if (!is_array($this->attributes)) {
-                throw new TProtocolException('Bad type in structure.', TProtocolException::INVALID_DATA);
-            }
-            $xfer += $output->writeFieldBegin('attributes', TType::MAP, 5);
-            {
-                $output->writeMapBegin(TType::STRING, TType::STRING, count($this->attributes));
-                {
-                    foreach ($this->attributes as $kiter44 => $viter45)
-                    {
-                        $xfer += $output->writeString($kiter44);
-                        $xfer += $output->writeString($viter45);
-                    }
-                }
-                $output->writeMapEnd();
-            }
-            $xfer += $output->writeFieldEnd();
-        }
-        if ($this->durability !== null) {
-            $xfer += $output->writeFieldBegin('durability', TType::I32, 6);
-            $xfer += $output->writeI32($this->durability);
-            $xfer += $output->writeFieldEnd();
-        }
-        if ($this->cellVisibility !== null) {
-            if (!is_object($this->cellVisibility)) {
-                throw new TProtocolException('Bad type in structure.', TProtocolException::INVALID_DATA);
-            }
-            $xfer += $output->writeFieldBegin('cellVisibility', TType::STRUCT, 7);
-            $xfer += $this->cellVisibility->write($output);
-            $xfer += $output->writeFieldEnd();
-        }
-        $xfer += $output->writeFieldStop();
-        $xfer += $output->writeStructEnd();
-        return $xfer;
-    }
+
 
 }
 
 class TDelete {
-    static $_TSPEC;
+  static $_TSPEC;
 
-    public $row = null;
-    public $columns = null;
-    public $timestamp = null;
-    public $deleteType =   1;
-    public $attributes = null;
-    public $durability = null;
+  public $row = null;
+  public $columns = null;
+  public $timestamp = null;
+  public $deleteType =   1;
+  public $attributes = null;
+  public $durability = null;
 
-    public function __construct($vals=null) {
-        if (!isset(self::$_TSPEC)) {
-            self::$_TSPEC = array(
-                1 => array(
-                    'var' => 'row',
-                    'type' => TType::STRING,
-                ),
-                2 => array(
-                    'var' => 'columns',
-                    'type' => TType::LST,
-                    'etype' => TType::STRUCT,
-                    'elem' => array(
-                        'type' => TType::STRUCT,
-                        'class' => '\Hbase\TColumn',
-                    ),
-                ),
-                3 => array(
-                    'var' => 'timestamp',
-                    'type' => TType::I64,
-                ),
-                4 => array(
-                    'var' => 'deleteType',
-                    'type' => TType::I32,
-                ),
-                6 => array(
-                    'var' => 'attributes',
-                    'type' => TType::MAP,
-                    'ktype' => TType::STRING,
-                    'vtype' => TType::STRING,
-                    'key' => array(
-                        'type' => TType::STRING,
-                    ),
-                    'val' => array(
-                        'type' => TType::STRING,
-                    ),
-                ),
-                7 => array(
-                    'var' => 'durability',
-                    'type' => TType::I32,
-                ),
-            );
-        }
-        if (is_array($vals)) {
-            if (isset($vals['row'])) {
-                $this->row = $vals['row'];
-            }
-            if (isset($vals['columns'])) {
-                $this->columns = $vals['columns'];
-            }
-            if (isset($vals['timestamp'])) {
-                $this->timestamp = $vals['timestamp'];
-            }
-            if (isset($vals['deleteType'])) {
-                $this->deleteType = $vals['deleteType'];
-            }
-            if (isset($vals['attributes'])) {
-                $this->attributes = $vals['attributes'];
-            }
-            if (isset($vals['durability'])) {
-                $this->durability = $vals['durability'];
-            }
-        }
+  public function __construct($vals=null) {
+    if (!isset(self::$_TSPEC)) {
+      self::$_TSPEC = array(
+        1 => array(
+          'var' => 'row',
+          'type' => TType::STRING,
+          ),
+        2 => array(
+          'var' => 'columns',
+          'type' => TType::LST,
+          'etype' => TType::STRUCT,
+          'elem' => array(
+            'type' => TType::STRUCT,
+            'class' => '\Hbase\TColumn',
+            ),
+          ),
+        3 => array(
+          'var' => 'timestamp',
+          'type' => TType::I64,
+          ),
+        4 => array(
+          'var' => 'deleteType',
+          'type' => TType::I32,
+          ),
+        6 => array(
+          'var' => 'attributes',
+          'type' => TType::MAP,
+          'ktype' => TType::STRING,
+          'vtype' => TType::STRING,
+          'key' => array(
+            'type' => TType::STRING,
+          ),
+          'val' => array(
+            'type' => TType::STRING,
+            ),
+          ),
+        7 => array(
+          'var' => 'durability',
+          'type' => TType::I32,
+          ),
+        );
     }
-
-    public function getName() {
-        return 'TDelete';
+    if (is_array($vals)) {
+      if (isset($vals['row'])) {
+        $this->row = $vals['row'];
+      }
+      if (isset($vals['columns'])) {
+        $this->columns = $vals['columns'];
+      }
+      if (isset($vals['timestamp'])) {
+        $this->timestamp = $vals['timestamp'];
+      }
+      if (isset($vals['deleteType'])) {
+        $this->deleteType = $vals['deleteType'];
+      }
+      if (isset($vals['attributes'])) {
+        $this->attributes = $vals['attributes'];
+      }
+      if (isset($vals['durability'])) {
+        $this->durability = $vals['durability'];
+      }
     }
+  }
 
-    public function read($input)
-    {
-        $xfer = 0;
-        $fname = null;
-        $ftype = 0;
-        $fid = 0;
-        $xfer += $input->readStructBegin($fname);
-        while (true)
-        {
-            $xfer += $input->readFieldBegin($fname, $ftype, $fid);
-            if ($ftype == TType::STOP) {
-                break;
-            }
-            switch ($fid)
-            {
-                case 1:
-                    if ($ftype == TType::STRING) {
-                        $xfer += $input->readString($this->row);
-                    } else {
-                        $xfer += $input->skip($ftype);
-                    }
-                    break;
-                case 2:
-                    if ($ftype == TType::LST) {
-                        $this->columns = array();
-                        $_size46 = 0;
-                        $_etype49 = 0;
-                        $xfer += $input->readListBegin($_etype49, $_size46);
-                        for ($_i50 = 0; $_i50 < $_size46; ++$_i50)
-                        {
-                            $elem51 = null;
-                            $elem51 = new \Hbase\TColumn();
-                            $xfer += $elem51->read($input);
-                            $this->columns []= $elem51;
-                        }
-                        $xfer += $input->readListEnd();
-                    } else {
-                        $xfer += $input->skip($ftype);
-                    }
-                    break;
-                case 3:
-                    if ($ftype == TType::I64) {
-                        $xfer += $input->readI64($this->timestamp);
-                    } else {
-                        $xfer += $input->skip($ftype);
-                    }
-                    break;
-                case 4:
-                    if ($ftype == TType::I32) {
-                        $xfer += $input->readI32($this->deleteType);
-                    } else {
-                        $xfer += $input->skip($ftype);
-                    }
-                    break;
-                case 6:
-                    if ($ftype == TType::MAP) {
-                        $this->attributes = array();
-                        $_size52 = 0;
-                        $_ktype53 = 0;
-                        $_vtype54 = 0;
-                        $xfer += $input->readMapBegin($_ktype53, $_vtype54, $_size52);
-                        for ($_i56 = 0; $_i56 < $_size52; ++$_i56)
-                        {
-                            $key57 = '';
-                            $val58 = '';
-                            $xfer += $input->readString($key57);
-                            $xfer += $input->readString($val58);
-                            $this->attributes[$key57] = $val58;
-                        }
-                        $xfer += $input->readMapEnd();
-                    } else {
-                        $xfer += $input->skip($ftype);
-                    }
-                    break;
-                case 7:
-                    if ($ftype == TType::I32) {
-                        $xfer += $input->readI32($this->durability);
-                    } else {
-                        $xfer += $input->skip($ftype);
-                    }
-                    break;
-                default:
-                    $xfer += $input->skip($ftype);
-                    break;
-            }
-            $xfer += $input->readFieldEnd();
-        }
-        $xfer += $input->readStructEnd();
-        return $xfer;
-    }
+  public function getName() {
+    return 'TDelete';
+  }
 
-    public function write($output) {
-        $xfer = 0;
-        $xfer += $output->writeStructBegin('TDelete');
-        if ($this->row !== null) {
-            $xfer += $output->writeFieldBegin('row', TType::STRING, 1);
-            $xfer += $output->writeString($this->row);
-            $xfer += $output->writeFieldEnd();
-        }
-        if ($this->columns !== null) {
-            if (!is_array($this->columns)) {
-                throw new TProtocolException('Bad type in structure.', TProtocolException::INVALID_DATA);
-            }
-            $xfer += $output->writeFieldBegin('columns', TType::LST, 2);
-            {
-                $output->writeListBegin(TType::STRUCT, count($this->columns));
-                {
-                    foreach ($this->columns as $iter59)
-                    {
-                        $xfer += $iter59->write($output);
-                    }
-                }
-                $output->writeListEnd();
-            }
-            $xfer += $output->writeFieldEnd();
-        }
-        if ($this->timestamp !== null) {
-            $xfer += $output->writeFieldBegin('timestamp', TType::I64, 3);
-            $xfer += $output->writeI64($this->timestamp);
-            $xfer += $output->writeFieldEnd();
-        }
-        if ($this->deleteType !== null) {
-            $xfer += $output->writeFieldBegin('deleteType', TType::I32, 4);
-            $xfer += $output->writeI32($this->deleteType);
-            $xfer += $output->writeFieldEnd();
-        }
-        if ($this->attributes !== null) {
-            if (!is_array($this->attributes)) {
-                throw new TProtocolException('Bad type in structure.', TProtocolException::INVALID_DATA);
-            }
-            $xfer += $output->writeFieldBegin('attributes', TType::MAP, 6);
-            {
-                $output->writeMapBegin(TType::STRING, TType::STRING, count($this->attributes));
-                {
-                    foreach ($this->attributes as $kiter60 => $viter61)
-                    {
-                        $xfer += $output->writeString($kiter60);
-                        $xfer += $output->writeString($viter61);
-                    }
-                }
-                $output->writeMapEnd();
-            }
-            $xfer += $output->writeFieldEnd();
-        }
-        if ($this->durability !== null) {
-            $xfer += $output->writeFieldBegin('durability', TType::I32, 7);
-            $xfer += $output->writeI32($this->durability);
-            $xfer += $output->writeFieldEnd();
-        }
-        $xfer += $output->writeFieldStop();
-        $xfer += $output->writeStructEnd();
-        return $xfer;
-    }
+
 
 }
 
 class TIncrement {
-    static $_TSPEC;
+  static $_TSPEC;
 
-    public $row = null;
-    public $columns = null;
-    public $attributes = null;
-    public $durability = null;
-    public $cellVisibility = null;
+  public $row = null;
+  public $columns = null;
+  public $attributes = null;
+  public $durability = null;
+  public $cellVisibility = null;
 
-    public function __construct($vals=null) {
-        if (!isset(self::$_TSPEC)) {
-            self::$_TSPEC = array(
-                1 => array(
-                    'var' => 'row',
-                    'type' => TType::STRING,
-                ),
-                2 => array(
-                    'var' => 'columns',
-                    'type' => TType::LST,
-                    'etype' => TType::STRUCT,
-                    'elem' => array(
-                        'type' => TType::STRUCT,
-                        'class' => '\Hbase\TColumnIncrement',
-                    ),
-                ),
-                4 => array(
-                    'var' => 'attributes',
-                    'type' => TType::MAP,
-                    'ktype' => TType::STRING,
-                    'vtype' => TType::STRING,
-                    'key' => array(
-                        'type' => TType::STRING,
-                    ),
-                    'val' => array(
-                        'type' => TType::STRING,
-                    ),
-                ),
-                5 => array(
-                    'var' => 'durability',
-                    'type' => TType::I32,
-                ),
-                6 => array(
-                    'var' => 'cellVisibility',
-                    'type' => TType::STRUCT,
-                    'class' => '\Hbase\TCellVisibility',
-                ),
-            );
-        }
-        if (is_array($vals)) {
-            if (isset($vals['row'])) {
-                $this->row = $vals['row'];
-            }
-            if (isset($vals['columns'])) {
-                $this->columns = $vals['columns'];
-            }
-            if (isset($vals['attributes'])) {
-                $this->attributes = $vals['attributes'];
-            }
-            if (isset($vals['durability'])) {
-                $this->durability = $vals['durability'];
-            }
-            if (isset($vals['cellVisibility'])) {
-                $this->cellVisibility = $vals['cellVisibility'];
-            }
-        }
+  public function __construct($vals=null) {
+    if (!isset(self::$_TSPEC)) {
+      self::$_TSPEC = array(
+        1 => array(
+          'var' => 'row',
+          'type' => TType::STRING,
+          ),
+        2 => array(
+          'var' => 'columns',
+          'type' => TType::LST,
+          'etype' => TType::STRUCT,
+          'elem' => array(
+            'type' => TType::STRUCT,
+            'class' => '\Hbase\TColumnIncrement',
+            ),
+          ),
+        4 => array(
+          'var' => 'attributes',
+          'type' => TType::MAP,
+          'ktype' => TType::STRING,
+          'vtype' => TType::STRING,
+          'key' => array(
+            'type' => TType::STRING,
+          ),
+          'val' => array(
+            'type' => TType::STRING,
+            ),
+          ),
+        5 => array(
+          'var' => 'durability',
+          'type' => TType::I32,
+          ),
+        6 => array(
+          'var' => 'cellVisibility',
+          'type' => TType::STRUCT,
+          'class' => '\Hbase\TCellVisibility',
+          ),
+        );
     }
-
-    public function getName() {
-        return 'TIncrement';
+    if (is_array($vals)) {
+      if (isset($vals['row'])) {
+        $this->row = $vals['row'];
+      }
+      if (isset($vals['columns'])) {
+        $this->columns = $vals['columns'];
+      }
+      if (isset($vals['attributes'])) {
+        $this->attributes = $vals['attributes'];
+      }
+      if (isset($vals['durability'])) {
+        $this->durability = $vals['durability'];
+      }
+      if (isset($vals['cellVisibility'])) {
+        $this->cellVisibility = $vals['cellVisibility'];
+      }
     }
+  }
 
-    public function read($input)
-    {
-        $xfer = 0;
-        $fname = null;
-        $ftype = 0;
-        $fid = 0;
-        $xfer += $input->readStructBegin($fname);
-        while (true)
-        {
-            $xfer += $input->readFieldBegin($fname, $ftype, $fid);
-            if ($ftype == TType::STOP) {
-                break;
-            }
-            switch ($fid)
-            {
-                case 1:
-                    if ($ftype == TType::STRING) {
-                        $xfer += $input->readString($this->row);
-                    } else {
-                        $xfer += $input->skip($ftype);
-                    }
-                    break;
-                case 2:
-                    if ($ftype == TType::LST) {
-                        $this->columns = array();
-                        $_size62 = 0;
-                        $_etype65 = 0;
-                        $xfer += $input->readListBegin($_etype65, $_size62);
-                        for ($_i66 = 0; $_i66 < $_size62; ++$_i66)
-                        {
-                            $elem67 = null;
-                            $elem67 = new \Hbase\TColumnIncrement();
-                            $xfer += $elem67->read($input);
-                            $this->columns []= $elem67;
-                        }
-                        $xfer += $input->readListEnd();
-                    } else {
-                        $xfer += $input->skip($ftype);
-                    }
-                    break;
-                case 4:
-                    if ($ftype == TType::MAP) {
-                        $this->attributes = array();
-                        $_size68 = 0;
-                        $_ktype69 = 0;
-                        $_vtype70 = 0;
-                        $xfer += $input->readMapBegin($_ktype69, $_vtype70, $_size68);
-                        for ($_i72 = 0; $_i72 < $_size68; ++$_i72)
-                        {
-                            $key73 = '';
-                            $val74 = '';
-                            $xfer += $input->readString($key73);
-                            $xfer += $input->readString($val74);
-                            $this->attributes[$key73] = $val74;
-                        }
-                        $xfer += $input->readMapEnd();
-                    } else {
-                        $xfer += $input->skip($ftype);
-                    }
-                    break;
-                case 5:
-                    if ($ftype == TType::I32) {
-                        $xfer += $input->readI32($this->durability);
-                    } else {
-                        $xfer += $input->skip($ftype);
-                    }
-                    break;
-                case 6:
-                    if ($ftype == TType::STRUCT) {
-                        $this->cellVisibility = new \Hbase\TCellVisibility();
-                        $xfer += $this->cellVisibility->read($input);
-                    } else {
-                        $xfer += $input->skip($ftype);
-                    }
-                    break;
-                default:
-                    $xfer += $input->skip($ftype);
-                    break;
-            }
-            $xfer += $input->readFieldEnd();
-        }
-        $xfer += $input->readStructEnd();
-        return $xfer;
-    }
+  public function getName() {
+    return 'TIncrement';
+  }
 
-    public function write($output) {
-        $xfer = 0;
-        $xfer += $output->writeStructBegin('TIncrement');
-        if ($this->row !== null) {
-            $xfer += $output->writeFieldBegin('row', TType::STRING, 1);
-            $xfer += $output->writeString($this->row);
-            $xfer += $output->writeFieldEnd();
-        }
-        if ($this->columns !== null) {
-            if (!is_array($this->columns)) {
-                throw new TProtocolException('Bad type in structure.', TProtocolException::INVALID_DATA);
-            }
-            $xfer += $output->writeFieldBegin('columns', TType::LST, 2);
-            {
-                $output->writeListBegin(TType::STRUCT, count($this->columns));
-                {
-                    foreach ($this->columns as $iter75)
-                    {
-                        $xfer += $iter75->write($output);
-                    }
-                }
-                $output->writeListEnd();
-            }
-            $xfer += $output->writeFieldEnd();
-        }
-        if ($this->attributes !== null) {
-            if (!is_array($this->attributes)) {
-                throw new TProtocolException('Bad type in structure.', TProtocolException::INVALID_DATA);
-            }
-            $xfer += $output->writeFieldBegin('attributes', TType::MAP, 4);
-            {
-                $output->writeMapBegin(TType::STRING, TType::STRING, count($this->attributes));
-                {
-                    foreach ($this->attributes as $kiter76 => $viter77)
-                    {
-                        $xfer += $output->writeString($kiter76);
-                        $xfer += $output->writeString($viter77);
-                    }
-                }
-                $output->writeMapEnd();
-            }
-            $xfer += $output->writeFieldEnd();
-        }
-        if ($this->durability !== null) {
-            $xfer += $output->writeFieldBegin('durability', TType::I32, 5);
-            $xfer += $output->writeI32($this->durability);
-            $xfer += $output->writeFieldEnd();
-        }
-        if ($this->cellVisibility !== null) {
-            if (!is_object($this->cellVisibility)) {
-                throw new TProtocolException('Bad type in structure.', TProtocolException::INVALID_DATA);
-            }
-            $xfer += $output->writeFieldBegin('cellVisibility', TType::STRUCT, 6);
-            $xfer += $this->cellVisibility->write($output);
-            $xfer += $output->writeFieldEnd();
-        }
-        $xfer += $output->writeFieldStop();
-        $xfer += $output->writeStructEnd();
-        return $xfer;
-    }
+
 
 }
 
 class TAppend {
-    static $_TSPEC;
+  static $_TSPEC;
 
-    public $row = null;
-    public $columns = null;
-    public $attributes = null;
-    public $durability = null;
-    public $cellVisibility = null;
+  public $row = null;
+  public $columns = null;
+  public $attributes = null;
+  public $durability = null;
+  public $cellVisibility = null;
 
-    public function __construct($vals=null) {
-        if (!isset(self::$_TSPEC)) {
-            self::$_TSPEC = array(
-                1 => array(
-                    'var' => 'row',
-                    'type' => TType::STRING,
-                ),
-                2 => array(
-                    'var' => 'columns',
-                    'type' => TType::LST,
-                    'etype' => TType::STRUCT,
-                    'elem' => array(
-                        'type' => TType::STRUCT,
-                        'class' => '\Hbase\TColumnValue',
-                    ),
-                ),
-                3 => array(
-                    'var' => 'attributes',
-                    'type' => TType::MAP,
-                    'ktype' => TType::STRING,
-                    'vtype' => TType::STRING,
-                    'key' => array(
-                        'type' => TType::STRING,
-                    ),
-                    'val' => array(
-                        'type' => TType::STRING,
-                    ),
-                ),
-                4 => array(
-                    'var' => 'durability',
-                    'type' => TType::I32,
-                ),
-                5 => array(
-                    'var' => 'cellVisibility',
-                    'type' => TType::STRUCT,
-                    'class' => '\Hbase\TCellVisibility',
-                ),
-            );
-        }
-        if (is_array($vals)) {
-            if (isset($vals['row'])) {
-                $this->row = $vals['row'];
-            }
-            if (isset($vals['columns'])) {
-                $this->columns = $vals['columns'];
-            }
-            if (isset($vals['attributes'])) {
-                $this->attributes = $vals['attributes'];
-            }
-            if (isset($vals['durability'])) {
-                $this->durability = $vals['durability'];
-            }
-            if (isset($vals['cellVisibility'])) {
-                $this->cellVisibility = $vals['cellVisibility'];
-            }
-        }
+  public function __construct($vals=null) {
+    if (!isset(self::$_TSPEC)) {
+      self::$_TSPEC = array(
+        1 => array(
+          'var' => 'row',
+          'type' => TType::STRING,
+          ),
+        2 => array(
+          'var' => 'columns',
+          'type' => TType::LST,
+          'etype' => TType::STRUCT,
+          'elem' => array(
+            'type' => TType::STRUCT,
+            'class' => '\Hbase\TColumnValue',
+            ),
+          ),
+        3 => array(
+          'var' => 'attributes',
+          'type' => TType::MAP,
+          'ktype' => TType::STRING,
+          'vtype' => TType::STRING,
+          'key' => array(
+            'type' => TType::STRING,
+          ),
+          'val' => array(
+            'type' => TType::STRING,
+            ),
+          ),
+        4 => array(
+          'var' => 'durability',
+          'type' => TType::I32,
+          ),
+        5 => array(
+          'var' => 'cellVisibility',
+          'type' => TType::STRUCT,
+          'class' => '\Hbase\TCellVisibility',
+          ),
+        );
     }
-
-    public function getName() {
-        return 'TAppend';
+    if (is_array($vals)) {
+      if (isset($vals['row'])) {
+        $this->row = $vals['row'];
+      }
+      if (isset($vals['columns'])) {
+        $this->columns = $vals['columns'];
+      }
+      if (isset($vals['attributes'])) {
+        $this->attributes = $vals['attributes'];
+      }
+      if (isset($vals['durability'])) {
+        $this->durability = $vals['durability'];
+      }
+      if (isset($vals['cellVisibility'])) {
+        $this->cellVisibility = $vals['cellVisibility'];
+      }
     }
+  }
 
-    public function read($input)
-    {
-        $xfer = 0;
-        $fname = null;
-        $ftype = 0;
-        $fid = 0;
-        $xfer += $input->readStructBegin($fname);
-        while (true)
-        {
-            $xfer += $input->readFieldBegin($fname, $ftype, $fid);
-            if ($ftype == TType::STOP) {
-                break;
-            }
-            switch ($fid)
-            {
-                case 1:
-                    if ($ftype == TType::STRING) {
-                        $xfer += $input->readString($this->row);
-                    } else {
-                        $xfer += $input->skip($ftype);
-                    }
-                    break;
-                case 2:
-                    if ($ftype == TType::LST) {
-                        $this->columns = array();
-                        $_size78 = 0;
-                        $_etype81 = 0;
-                        $xfer += $input->readListBegin($_etype81, $_size78);
-                        for ($_i82 = 0; $_i82 < $_size78; ++$_i82)
-                        {
-                            $elem83 = null;
-                            $elem83 = new \Hbase\TColumnValue();
-                            $xfer += $elem83->read($input);
-                            $this->columns []= $elem83;
-                        }
-                        $xfer += $input->readListEnd();
-                    } else {
-                        $xfer += $input->skip($ftype);
-                    }
-                    break;
-                case 3:
-                    if ($ftype == TType::MAP) {
-                        $this->attributes = array();
-                        $_size84 = 0;
-                        $_ktype85 = 0;
-                        $_vtype86 = 0;
-                        $xfer += $input->readMapBegin($_ktype85, $_vtype86, $_size84);
-                        for ($_i88 = 0; $_i88 < $_size84; ++$_i88)
-                        {
-                            $key89 = '';
-                            $val90 = '';
-                            $xfer += $input->readString($key89);
-                            $xfer += $input->readString($val90);
-                            $this->attributes[$key89] = $val90;
-                        }
-                        $xfer += $input->readMapEnd();
-                    } else {
-                        $xfer += $input->skip($ftype);
-                    }
-                    break;
-                case 4:
-                    if ($ftype == TType::I32) {
-                        $xfer += $input->readI32($this->durability);
-                    } else {
-                        $xfer += $input->skip($ftype);
-                    }
-                    break;
-                case 5:
-                    if ($ftype == TType::STRUCT) {
-                        $this->cellVisibility = new \Hbase\TCellVisibility();
-                        $xfer += $this->cellVisibility->read($input);
-                    } else {
-                        $xfer += $input->skip($ftype);
-                    }
-                    break;
-                default:
-                    $xfer += $input->skip($ftype);
-                    break;
-            }
-            $xfer += $input->readFieldEnd();
-        }
-        $xfer += $input->readStructEnd();
-        return $xfer;
-    }
+  public function getName() {
+    return 'TAppend';
+  }
 
-    public function write($output) {
-        $xfer = 0;
-        $xfer += $output->writeStructBegin('TAppend');
-        if ($this->row !== null) {
-            $xfer += $output->writeFieldBegin('row', TType::STRING, 1);
-            $xfer += $output->writeString($this->row);
-            $xfer += $output->writeFieldEnd();
-        }
-        if ($this->columns !== null) {
-            if (!is_array($this->columns)) {
-                throw new TProtocolException('Bad type in structure.', TProtocolException::INVALID_DATA);
-            }
-            $xfer += $output->writeFieldBegin('columns', TType::LST, 2);
-            {
-                $output->writeListBegin(TType::STRUCT, count($this->columns));
-                {
-                    foreach ($this->columns as $iter91)
-                    {
-                        $xfer += $iter91->write($output);
-                    }
-                }
-                $output->writeListEnd();
-            }
-            $xfer += $output->writeFieldEnd();
-        }
-        if ($this->attributes !== null) {
-            if (!is_array($this->attributes)) {
-                throw new TProtocolException('Bad type in structure.', TProtocolException::INVALID_DATA);
-            }
-            $xfer += $output->writeFieldBegin('attributes', TType::MAP, 3);
-            {
-                $output->writeMapBegin(TType::STRING, TType::STRING, count($this->attributes));
-                {
-                    foreach ($this->attributes as $kiter92 => $viter93)
-                    {
-                        $xfer += $output->writeString($kiter92);
-                        $xfer += $output->writeString($viter93);
-                    }
-                }
-                $output->writeMapEnd();
-            }
-            $xfer += $output->writeFieldEnd();
-        }
-        if ($this->durability !== null) {
-            $xfer += $output->writeFieldBegin('durability', TType::I32, 4);
-            $xfer += $output->writeI32($this->durability);
-            $xfer += $output->writeFieldEnd();
-        }
-        if ($this->cellVisibility !== null) {
-            if (!is_object($this->cellVisibility)) {
-                throw new TProtocolException('Bad type in structure.', TProtocolException::INVALID_DATA);
-            }
-            $xfer += $output->writeFieldBegin('cellVisibility', TType::STRUCT, 5);
-            $xfer += $this->cellVisibility->write($output);
-            $xfer += $output->writeFieldEnd();
-        }
-        $xfer += $output->writeFieldStop();
-        $xfer += $output->writeStructEnd();
-        return $xfer;
-    }
+
 
 }
 
 class TScan {
-    static $_TSPEC;
+  static $_TSPEC;
 
-    public $startRow = null;
-    public $stopRow = null;
-    public $columns = null;
-    public $caching = null;
-    public $maxVersions = 1;
-    public $timeRange = null;
-    public $filterString = null;
-    public $batchSize = null;
-    public $attributes = null;
-    public $authorizations = null;
-    public $reversed = null;
+  public $startRow = null;
+  public $stopRow = null;
+  public $columns = null;
+  public $caching = null;
+  public $maxVersions = 1;
+  public $timeRange = null;
+  public $filterString = null;
+  public $batchSize = null;
+  public $attributes = null;
+  public $authorizations = null;
+  public $reversed = null;
 
-    public function __construct($vals=null) {
-        if (!isset(self::$_TSPEC)) {
-            self::$_TSPEC = array(
-                1 => array(
-                    'var' => 'startRow',
-                    'type' => TType::STRING,
-                ),
-                2 => array(
-                    'var' => 'stopRow',
-                    'type' => TType::STRING,
-                ),
-                3 => array(
-                    'var' => 'columns',
-                    'type' => TType::LST,
-                    'etype' => TType::STRUCT,
-                    'elem' => array(
-                        'type' => TType::STRUCT,
-                        'class' => '\Hbase\TColumn',
-                    ),
-                ),
-                4 => array(
-                    'var' => 'caching',
-                    'type' => TType::I32,
-                ),
-                5 => array(
-                    'var' => 'maxVersions',
-                    'type' => TType::I32,
-                ),
-                6 => array(
-                    'var' => 'timeRange',
-                    'type' => TType::STRUCT,
-                    'class' => '\Hbase\TTimeRange',
-                ),
-                7 => array(
-                    'var' => 'filterString',
-                    'type' => TType::STRING,
-                ),
-                8 => array(
-                    'var' => 'batchSize',
-                    'type' => TType::I32,
-                ),
-                9 => array(
-                    'var' => 'attributes',
-                    'type' => TType::MAP,
-                    'ktype' => TType::STRING,
-                    'vtype' => TType::STRING,
-                    'key' => array(
-                        'type' => TType::STRING,
-                    ),
-                    'val' => array(
-                        'type' => TType::STRING,
-                    ),
-                ),
-                10 => array(
-                    'var' => 'authorizations',
-                    'type' => TType::STRUCT,
-                    'class' => '\Hbase\TAuthorization',
-                ),
-                11 => array(
-                    'var' => 'reversed',
-                    'type' => TType::BOOL,
-                ),
-            );
-        }
-        if (is_array($vals)) {
-            if (isset($vals['startRow'])) {
-                $this->startRow = $vals['startRow'];
-            }
-            if (isset($vals['stopRow'])) {
-                $this->stopRow = $vals['stopRow'];
-            }
-            if (isset($vals['columns'])) {
-                $this->columns = $vals['columns'];
-            }
-            if (isset($vals['caching'])) {
-                $this->caching = $vals['caching'];
-            }
-            if (isset($vals['maxVersions'])) {
-                $this->maxVersions = $vals['maxVersions'];
-            }
-            if (isset($vals['timeRange'])) {
-                $this->timeRange = $vals['timeRange'];
-            }
-            if (isset($vals['filterString'])) {
-                $this->filterString = $vals['filterString'];
-            }
-            if (isset($vals['batchSize'])) {
-                $this->batchSize = $vals['batchSize'];
-            }
-            if (isset($vals['attributes'])) {
-                $this->attributes = $vals['attributes'];
-            }
-            if (isset($vals['authorizations'])) {
-                $this->authorizations = $vals['authorizations'];
-            }
-            if (isset($vals['reversed'])) {
-                $this->reversed = $vals['reversed'];
-            }
-        }
+  public function __construct($vals=null) {
+    if (!isset(self::$_TSPEC)) {
+      self::$_TSPEC = array(
+        1 => array(
+          'var' => 'startRow',
+          'type' => TType::STRING,
+          ),
+        2 => array(
+          'var' => 'stopRow',
+          'type' => TType::STRING,
+          ),
+        3 => array(
+          'var' => 'columns',
+          'type' => TType::LST,
+          'etype' => TType::STRUCT,
+          'elem' => array(
+            'type' => TType::STRUCT,
+            'class' => '\Hbase\TColumn',
+            ),
+          ),
+        4 => array(
+          'var' => 'caching',
+          'type' => TType::I32,
+          ),
+        5 => array(
+          'var' => 'maxVersions',
+          'type' => TType::I32,
+          ),
+        6 => array(
+          'var' => 'timeRange',
+          'type' => TType::STRUCT,
+          'class' => '\Hbase\TTimeRange',
+          ),
+        7 => array(
+          'var' => 'filterString',
+          'type' => TType::STRING,
+          ),
+        8 => array(
+          'var' => 'batchSize',
+          'type' => TType::I32,
+          ),
+        9 => array(
+          'var' => 'attributes',
+          'type' => TType::MAP,
+          'ktype' => TType::STRING,
+          'vtype' => TType::STRING,
+          'key' => array(
+            'type' => TType::STRING,
+          ),
+          'val' => array(
+            'type' => TType::STRING,
+            ),
+          ),
+        10 => array(
+          'var' => 'authorizations',
+          'type' => TType::STRUCT,
+          'class' => '\Hbase\TAuthorization',
+          ),
+        11 => array(
+          'var' => 'reversed',
+          'type' => TType::BOOL,
+          ),
+        );
     }
-
-    public function getName() {
-        return 'TScan';
+    if (is_array($vals)) {
+      if (isset($vals['startRow'])) {
+        $this->startRow = $vals['startRow'];
+      }
+      if (isset($vals['stopRow'])) {
+        $this->stopRow = $vals['stopRow'];
+      }
+      if (isset($vals['columns'])) {
+        $this->columns = $vals['columns'];
+      }
+      if (isset($vals['caching'])) {
+        $this->caching = $vals['caching'];
+      }
+      if (isset($vals['maxVersions'])) {
+        $this->maxVersions = $vals['maxVersions'];
+      }
+      if (isset($vals['timeRange'])) {
+        $this->timeRange = $vals['timeRange'];
+      }
+      if (isset($vals['filterString'])) {
+        $this->filterString = $vals['filterString'];
+      }
+      if (isset($vals['batchSize'])) {
+        $this->batchSize = $vals['batchSize'];
+      }
+      if (isset($vals['attributes'])) {
+        $this->attributes = $vals['attributes'];
+      }
+      if (isset($vals['authorizations'])) {
+        $this->authorizations = $vals['authorizations'];
+      }
+      if (isset($vals['reversed'])) {
+        $this->reversed = $vals['reversed'];
+      }
     }
+  }
 
-    public function read($input)
-    {
-        $xfer = 0;
-        $fname = null;
-        $ftype = 0;
-        $fid = 0;
-        $xfer += $input->readStructBegin($fname);
-        while (true)
-        {
-            $xfer += $input->readFieldBegin($fname, $ftype, $fid);
-            if ($ftype == TType::STOP) {
-                break;
-            }
-            switch ($fid)
-            {
-                case 1:
-                    if ($ftype == TType::STRING) {
-                        $xfer += $input->readString($this->startRow);
-                    } else {
-                        $xfer += $input->skip($ftype);
-                    }
-                    break;
-                case 2:
-                    if ($ftype == TType::STRING) {
-                        $xfer += $input->readString($this->stopRow);
-                    } else {
-                        $xfer += $input->skip($ftype);
-                    }
-                    break;
-                case 3:
-                    if ($ftype == TType::LST) {
-                        $this->columns = array();
-                        $_size94 = 0;
-                        $_etype97 = 0;
-                        $xfer += $input->readListBegin($_etype97, $_size94);
-                        for ($_i98 = 0; $_i98 < $_size94; ++$_i98)
-                        {
-                            $elem99 = null;
-                            $elem99 = new \Hbase\TColumn();
-                            $xfer += $elem99->read($input);
-                            $this->columns []= $elem99;
-                        }
-                        $xfer += $input->readListEnd();
-                    } else {
-                        $xfer += $input->skip($ftype);
-                    }
-                    break;
-                case 4:
-                    if ($ftype == TType::I32) {
-                        $xfer += $input->readI32($this->caching);
-                    } else {
-                        $xfer += $input->skip($ftype);
-                    }
-                    break;
-                case 5:
-                    if ($ftype == TType::I32) {
-                        $xfer += $input->readI32($this->maxVersions);
-                    } else {
-                        $xfer += $input->skip($ftype);
-                    }
-                    break;
-                case 6:
-                    if ($ftype == TType::STRUCT) {
-                        $this->timeRange = new \Hbase\TTimeRange();
-                        $xfer += $this->timeRange->read($input);
-                    } else {
-                        $xfer += $input->skip($ftype);
-                    }
-                    break;
-                case 7:
-                    if ($ftype == TType::STRING) {
-                        $xfer += $input->readString($this->filterString);
-                    } else {
-                        $xfer += $input->skip($ftype);
-                    }
-                    break;
-                case 8:
-                    if ($ftype == TType::I32) {
-                        $xfer += $input->readI32($this->batchSize);
-                    } else {
-                        $xfer += $input->skip($ftype);
-                    }
-                    break;
-                case 9:
-                    if ($ftype == TType::MAP) {
-                        $this->attributes = array();
-                        $_size100 = 0;
-                        $_ktype101 = 0;
-                        $_vtype102 = 0;
-                        $xfer += $input->readMapBegin($_ktype101, $_vtype102, $_size100);
-                        for ($_i104 = 0; $_i104 < $_size100; ++$_i104)
-                        {
-                            $key105 = '';
-                            $val106 = '';
-                            $xfer += $input->readString($key105);
-                            $xfer += $input->readString($val106);
-                            $this->attributes[$key105] = $val106;
-                        }
-                        $xfer += $input->readMapEnd();
-                    } else {
-                        $xfer += $input->skip($ftype);
-                    }
-                    break;
-                case 10:
-                    if ($ftype == TType::STRUCT) {
-                        $this->authorizations = new \Hbase\TAuthorization();
-                        $xfer += $this->authorizations->read($input);
-                    } else {
-                        $xfer += $input->skip($ftype);
-                    }
-                    break;
-                case 11:
-                    if ($ftype == TType::BOOL) {
-                        $xfer += $input->readBool($this->reversed);
-                    } else {
-                        $xfer += $input->skip($ftype);
-                    }
-                    break;
-                default:
-                    $xfer += $input->skip($ftype);
-                    break;
-            }
-            $xfer += $input->readFieldEnd();
-        }
-        $xfer += $input->readStructEnd();
-        return $xfer;
-    }
+  public function getName() {
+    return 'TScan';
+  }
 
-    public function write($output) {
-        $xfer = 0;
-        $xfer += $output->writeStructBegin('TScan');
-        if ($this->startRow !== null) {
-            $xfer += $output->writeFieldBegin('startRow', TType::STRING, 1);
-            $xfer += $output->writeString($this->startRow);
-            $xfer += $output->writeFieldEnd();
-        }
-        if ($this->stopRow !== null) {
-            $xfer += $output->writeFieldBegin('stopRow', TType::STRING, 2);
-            $xfer += $output->writeString($this->stopRow);
-            $xfer += $output->writeFieldEnd();
-        }
-        if ($this->columns !== null) {
-            if (!is_array($this->columns)) {
-                throw new TProtocolException('Bad type in structure.', TProtocolException::INVALID_DATA);
-            }
-            $xfer += $output->writeFieldBegin('columns', TType::LST, 3);
-            {
-                $output->writeListBegin(TType::STRUCT, count($this->columns));
-                {
-                    foreach ($this->columns as $iter107)
-                    {
-                        $xfer += $iter107->write($output);
-                    }
-                }
-                $output->writeListEnd();
-            }
-            $xfer += $output->writeFieldEnd();
-        }
-        if ($this->caching !== null) {
-            $xfer += $output->writeFieldBegin('caching', TType::I32, 4);
-            $xfer += $output->writeI32($this->caching);
-            $xfer += $output->writeFieldEnd();
-        }
-        if ($this->maxVersions !== null) {
-            $xfer += $output->writeFieldBegin('maxVersions', TType::I32, 5);
-            $xfer += $output->writeI32($this->maxVersions);
-            $xfer += $output->writeFieldEnd();
-        }
-        if ($this->timeRange !== null) {
-            if (!is_object($this->timeRange)) {
-                throw new TProtocolException('Bad type in structure.', TProtocolException::INVALID_DATA);
-            }
-            $xfer += $output->writeFieldBegin('timeRange', TType::STRUCT, 6);
-            $xfer += $this->timeRange->write($output);
-            $xfer += $output->writeFieldEnd();
-        }
-        if ($this->filterString !== null) {
-            $xfer += $output->writeFieldBegin('filterString', TType::STRING, 7);
-            $xfer += $output->writeString($this->filterString);
-            $xfer += $output->writeFieldEnd();
-        }
-        if ($this->batchSize !== null) {
-            $xfer += $output->writeFieldBegin('batchSize', TType::I32, 8);
-            $xfer += $output->writeI32($this->batchSize);
-            $xfer += $output->writeFieldEnd();
-        }
-        if ($this->attributes !== null) {
-            if (!is_array($this->attributes)) {
-                throw new TProtocolException('Bad type in structure.', TProtocolException::INVALID_DATA);
-            }
-            $xfer += $output->writeFieldBegin('attributes', TType::MAP, 9);
-            {
-                $output->writeMapBegin(TType::STRING, TType::STRING, count($this->attributes));
-                {
-                    foreach ($this->attributes as $kiter108 => $viter109)
-                    {
-                        $xfer += $output->writeString($kiter108);
-                        $xfer += $output->writeString($viter109);
-                    }
-                }
-                $output->writeMapEnd();
-            }
-            $xfer += $output->writeFieldEnd();
-        }
-        if ($this->authorizations !== null) {
-            if (!is_object($this->authorizations)) {
-                throw new TProtocolException('Bad type in structure.', TProtocolException::INVALID_DATA);
-            }
-            $xfer += $output->writeFieldBegin('authorizations', TType::STRUCT, 10);
-            $xfer += $this->authorizations->write($output);
-            $xfer += $output->writeFieldEnd();
-        }
-        if ($this->reversed !== null) {
-            $xfer += $output->writeFieldBegin('reversed', TType::BOOL, 11);
-            $xfer += $output->writeBool($this->reversed);
-            $xfer += $output->writeFieldEnd();
-        }
-        $xfer += $output->writeFieldStop();
-        $xfer += $output->writeStructEnd();
-        return $xfer;
-    }
+
 
 }
 
 class TMutation {
-    static $_TSPEC;
+  static $_TSPEC;
 
-    public $put = null;
-    public $deleteSingle = null;
+  public $put = null;
+  public $deleteSingle = null;
 
-    public function __construct($vals=null) {
-        if (!isset(self::$_TSPEC)) {
-            self::$_TSPEC = array(
-                1 => array(
-                    'var' => 'put',
-                    'type' => TType::STRUCT,
-                    'class' => '\Hbase\TPut',
-                ),
-                2 => array(
-                    'var' => 'deleteSingle',
-                    'type' => TType::STRUCT,
-                    'class' => '\Hbase\TDelete',
-                ),
-            );
-        }
-        if (is_array($vals)) {
-            if (isset($vals['put'])) {
-                $this->put = $vals['put'];
-            }
-            if (isset($vals['deleteSingle'])) {
-                $this->deleteSingle = $vals['deleteSingle'];
-            }
-        }
+  public function __construct($vals=null) {
+    if (!isset(self::$_TSPEC)) {
+      self::$_TSPEC = array(
+        1 => array(
+          'var' => 'put',
+          'type' => TType::STRUCT,
+          'class' => '\Hbase\TPut',
+          ),
+        2 => array(
+          'var' => 'deleteSingle',
+          'type' => TType::STRUCT,
+          'class' => '\Hbase\TDelete',
+          ),
+        );
     }
-
-    public function getName() {
-        return 'TMutation';
+    if (is_array($vals)) {
+      if (isset($vals['put'])) {
+        $this->put = $vals['put'];
+      }
+      if (isset($vals['deleteSingle'])) {
+        $this->deleteSingle = $vals['deleteSingle'];
+      }
     }
+  }
 
-    public function read($input)
-    {
-        $xfer = 0;
-        $fname = null;
-        $ftype = 0;
-        $fid = 0;
-        $xfer += $input->readStructBegin($fname);
-        while (true)
-        {
-            $xfer += $input->readFieldBegin($fname, $ftype, $fid);
-            if ($ftype == TType::STOP) {
-                break;
-            }
-            switch ($fid)
-            {
-                case 1:
-                    if ($ftype == TType::STRUCT) {
-                        $this->put = new \Hbase\TPut();
-                        $xfer += $this->put->read($input);
-                    } else {
-                        $xfer += $input->skip($ftype);
-                    }
-                    break;
-                case 2:
-                    if ($ftype == TType::STRUCT) {
-                        $this->deleteSingle = new \Hbase\TDelete();
-                        $xfer += $this->deleteSingle->read($input);
-                    } else {
-                        $xfer += $input->skip($ftype);
-                    }
-                    break;
-                default:
-                    $xfer += $input->skip($ftype);
-                    break;
-            }
-            $xfer += $input->readFieldEnd();
-        }
-        $xfer += $input->readStructEnd();
-        return $xfer;
-    }
+  public function getName() {
+    return 'TMutation';
+  }
 
-    public function write($output) {
-        $xfer = 0;
-        $xfer += $output->writeStructBegin('TMutation');
-        if ($this->put !== null) {
-            if (!is_object($this->put)) {
-                throw new TProtocolException('Bad type in structure.', TProtocolException::INVALID_DATA);
-            }
-            $xfer += $output->writeFieldBegin('put', TType::STRUCT, 1);
-            $xfer += $this->put->write($output);
-            $xfer += $output->writeFieldEnd();
-        }
-        if ($this->deleteSingle !== null) {
-            if (!is_object($this->deleteSingle)) {
-                throw new TProtocolException('Bad type in structure.', TProtocolException::INVALID_DATA);
-            }
-            $xfer += $output->writeFieldBegin('deleteSingle', TType::STRUCT, 2);
-            $xfer += $this->deleteSingle->write($output);
-            $xfer += $output->writeFieldEnd();
-        }
-        $xfer += $output->writeFieldStop();
-        $xfer += $output->writeStructEnd();
-        return $xfer;
-    }
+
 
 }
 
 class TRowMutations {
-    static $_TSPEC;
+  static $_TSPEC;
 
-    public $row = null;
-    public $mutations = null;
+  public $row = null;
+  public $mutations = null;
 
-    public function __construct($vals=null) {
-        if (!isset(self::$_TSPEC)) {
-            self::$_TSPEC = array(
-                1 => array(
-                    'var' => 'row',
-                    'type' => TType::STRING,
-                ),
-                2 => array(
-                    'var' => 'mutations',
-                    'type' => TType::LST,
-                    'etype' => TType::STRUCT,
-                    'elem' => array(
-                        'type' => TType::STRUCT,
-                        'class' => '\Hbase\TMutation',
-                    ),
-                ),
-            );
-        }
-        if (is_array($vals)) {
-            if (isset($vals['row'])) {
-                $this->row = $vals['row'];
-            }
-            if (isset($vals['mutations'])) {
-                $this->mutations = $vals['mutations'];
-            }
-        }
+  public function __construct($vals=null) {
+    if (!isset(self::$_TSPEC)) {
+      self::$_TSPEC = array(
+        1 => array(
+          'var' => 'row',
+          'type' => TType::STRING,
+          ),
+        2 => array(
+          'var' => 'mutations',
+          'type' => TType::LST,
+          'etype' => TType::STRUCT,
+          'elem' => array(
+            'type' => TType::STRUCT,
+            'class' => '\Hbase\TMutation',
+            ),
+          ),
+        );
     }
-
-    public function getName() {
-        return 'TRowMutations';
+    if (is_array($vals)) {
+      if (isset($vals['row'])) {
+        $this->row = $vals['row'];
+      }
+      if (isset($vals['mutations'])) {
+        $this->mutations = $vals['mutations'];
+      }
     }
+  }
 
-    public function read($input)
-    {
-        $xfer = 0;
-        $fname = null;
-        $ftype = 0;
-        $fid = 0;
-        $xfer += $input->readStructBegin($fname);
-        while (true)
-        {
-            $xfer += $input->readFieldBegin($fname, $ftype, $fid);
-            if ($ftype == TType::STOP) {
-                break;
-            }
-            switch ($fid)
-            {
-                case 1:
-                    if ($ftype == TType::STRING) {
-                        $xfer += $input->readString($this->row);
-                    } else {
-                        $xfer += $input->skip($ftype);
-                    }
-                    break;
-                case 2:
-                    if ($ftype == TType::LST) {
-                        $this->mutations = array();
-                        $_size110 = 0;
-                        $_etype113 = 0;
-                        $xfer += $input->readListBegin($_etype113, $_size110);
-                        for ($_i114 = 0; $_i114 < $_size110; ++$_i114)
-                        {
-                            $elem115 = null;
-                            $elem115 = new \Hbase\TMutation();
-                            $xfer += $elem115->read($input);
-                            $this->mutations []= $elem115;
-                        }
-                        $xfer += $input->readListEnd();
-                    } else {
-                        $xfer += $input->skip($ftype);
-                    }
-                    break;
-                default:
-                    $xfer += $input->skip($ftype);
-                    break;
-            }
-            $xfer += $input->readFieldEnd();
-        }
-        $xfer += $input->readStructEnd();
-        return $xfer;
-    }
+  public function getName() {
+    return 'TRowMutations';
+  }
 
-    public function write($output) {
-        $xfer = 0;
-        $xfer += $output->writeStructBegin('TRowMutations');
-        if ($this->row !== null) {
-            $xfer += $output->writeFieldBegin('row', TType::STRING, 1);
-            $xfer += $output->writeString($this->row);
-            $xfer += $output->writeFieldEnd();
-        }
-        if ($this->mutations !== null) {
-            if (!is_array($this->mutations)) {
-                throw new TProtocolException('Bad type in structure.', TProtocolException::INVALID_DATA);
-            }
-            $xfer += $output->writeFieldBegin('mutations', TType::LST, 2);
-            {
-                $output->writeListBegin(TType::STRUCT, count($this->mutations));
-                {
-                    foreach ($this->mutations as $iter116)
-                    {
-                        $xfer += $iter116->write($output);
-                    }
-                }
-                $output->writeListEnd();
-            }
-            $xfer += $output->writeFieldEnd();
-        }
-        $xfer += $output->writeFieldStop();
-        $xfer += $output->writeStructEnd();
-        return $xfer;
-    }
+
 
 }
 
 class TIOError extends TException {
-    static $_TSPEC;
+  static $_TSPEC;
 
-    public $message = null;
+  public $message = null;
 
-    public function __construct($vals=null) {
-        if (!isset(self::$_TSPEC)) {
-            self::$_TSPEC = array(
-                1 => array(
-                    'var' => 'message',
-                    'type' => TType::STRING,
-                ),
-            );
-        }
-        if (is_array($vals)) {
-            if (isset($vals['message'])) {
-                $this->message = $vals['message'];
-            }
-        }
+  public function __construct($vals=null) {
+    if (!isset(self::$_TSPEC)) {
+      self::$_TSPEC = array(
+        1 => array(
+          'var' => 'message',
+          'type' => TType::STRING,
+          ),
+        );
     }
-
-    public function getName() {
-        return 'TIOError';
+    if (is_array($vals)) {
+      if (isset($vals['message'])) {
+        $this->message = $vals['message'];
+      }
     }
+  }
 
-    public function read($input)
-    {
-        $xfer = 0;
-        $fname = null;
-        $ftype = 0;
-        $fid = 0;
-        $xfer += $input->readStructBegin($fname);
-        while (true)
-        {
-            $xfer += $input->readFieldBegin($fname, $ftype, $fid);
-            if ($ftype == TType::STOP) {
-                break;
-            }
-            switch ($fid)
-            {
-                case 1:
-                    if ($ftype == TType::STRING) {
-                        $xfer += $input->readString($this->message);
-                    } else {
-                        $xfer += $input->skip($ftype);
-                    }
-                    break;
-                default:
-                    $xfer += $input->skip($ftype);
-                    break;
-            }
-            $xfer += $input->readFieldEnd();
-        }
-        $xfer += $input->readStructEnd();
-        return $xfer;
-    }
+  public function getName() {
+    return 'TIOError';
+  }
 
-    public function write($output) {
-        $xfer = 0;
-        $xfer += $output->writeStructBegin('TIOError');
-        if ($this->message !== null) {
-            $xfer += $output->writeFieldBegin('message', TType::STRING, 1);
-            $xfer += $output->writeString($this->message);
-            $xfer += $output->writeFieldEnd();
-        }
-        $xfer += $output->writeFieldStop();
-        $xfer += $output->writeStructEnd();
-        return $xfer;
-    }
+
 
 }
 
 class TIllegalArgument extends TException {
-    static $_TSPEC;
+  static $_TSPEC;
 
-    public $message = null;
+  public $message = null;
 
-    public function __construct($vals=null) {
-        if (!isset(self::$_TSPEC)) {
-            self::$_TSPEC = array(
-                1 => array(
-                    'var' => 'message',
-                    'type' => TType::STRING,
-                ),
-            );
-        }
-        if (is_array($vals)) {
-            if (isset($vals['message'])) {
-                $this->message = $vals['message'];
-            }
-        }
+  public function __construct($vals=null) {
+    if (!isset(self::$_TSPEC)) {
+      self::$_TSPEC = array(
+        1 => array(
+          'var' => 'message',
+          'type' => TType::STRING,
+          ),
+        );
     }
-
-    public function getName() {
-        return 'TIllegalArgument';
+    if (is_array($vals)) {
+      if (isset($vals['message'])) {
+        $this->message = $vals['message'];
+      }
     }
+  }
 
-    public function read($input)
-    {
-        $xfer = 0;
-        $fname = null;
-        $ftype = 0;
-        $fid = 0;
-        $xfer += $input->readStructBegin($fname);
-        while (true)
-        {
-            $xfer += $input->readFieldBegin($fname, $ftype, $fid);
-            if ($ftype == TType::STOP) {
-                break;
-            }
-            switch ($fid)
-            {
-                case 1:
-                    if ($ftype == TType::STRING) {
-                        $xfer += $input->readString($this->message);
-                    } else {
-                        $xfer += $input->skip($ftype);
-                    }
-                    break;
-                default:
-                    $xfer += $input->skip($ftype);
-                    break;
-            }
-            $xfer += $input->readFieldEnd();
-        }
-        $xfer += $input->readStructEnd();
-        return $xfer;
-    }
+  public function getName() {
+    return 'TIllegalArgument';
+  }
 
-    public function write($output) {
-        $xfer = 0;
-        $xfer += $output->writeStructBegin('TIllegalArgument');
-        if ($this->message !== null) {
-            $xfer += $output->writeFieldBegin('message', TType::STRING, 1);
-            $xfer += $output->writeString($this->message);
-            $xfer += $output->writeFieldEnd();
-        }
-        $xfer += $output->writeFieldStop();
-        $xfer += $output->writeStructEnd();
-        return $xfer;
-    }
+
 
 }
 

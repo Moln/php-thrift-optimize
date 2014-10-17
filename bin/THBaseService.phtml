@@ -112,7 +112,7 @@ class TProtocolController
             $output->writeListBegin($items['etype'], count($items['value']));
 
             foreach ($items['value'] as $item) {
-                $callbacks[$items['elem']['type']]($xfer, $item);
+                $callbacks[$items['elem']['type']]($xfer, array('value' => $item));
             }
             $output->writeListEnd();
             $xfer += $output->writeFieldEnd();
@@ -172,7 +172,7 @@ class TProtocolController
                 function (&$item, &$xfer) {
                     $xfer += $this->input->readByte($item['value']);
                 },
-            TType::DOUBLE   =>
+            TType::DOUBLE =>
                 function (&$item, &$xfer) {
                     $xfer += $this->input->readDouble($item['value']);
                 },
@@ -223,7 +223,7 @@ class TProtocolController
             for ($i = 0; $i < $size; ++$i) {
                 $item = $items['elem'] + array('value' => null);
                 $callbacks[$items['elem']['type']]($item, $xfer);
-                $items['value'] = $item;
+                $items['value'][] = $item['value'];
             }
             $xfer += $this->input->readListEnd();
         };
@@ -276,3 +276,4 @@ class TProtocolController
         return null;
     }
 }
+
