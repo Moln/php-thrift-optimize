@@ -157,6 +157,24 @@ $get = new TGet(array('row' => 'row-1'));
 //echo "\n checkAndDelete: ";
 //var_dump($result);
 
+$result = $client->increment(
+    'product',
+    new \Hbase\TIncrement([
+        'row' => 'index',
+        'columns' => [
+            new \Hbase\TColumnIncrement([
+                'family'    => 'counter',
+                'qualifier' => 'num',
+//                'amount'=>5,
+            ]),
+        ],
+    ])
+);
+echo "\n increment: ";
+var_dump($result);
+exit;
+
+
 //$result = $client->increment(
 //    'test',
 //    new \Hbase\TIncrement([
@@ -246,15 +264,15 @@ $get = new TGet(array('row' => 'row-1'));
 //echo "\n mutateRow: success";
 
 
-$result = $client->getScannerResults(
-    'test',
-    new \Hbase\TScan([
-        'startRow' => 'row3',
-        'endRow' => 'row4',
-    ]),
-    10
-);
-echo "\n getScannerResults: ";
-var_dump($result);
+//$result = $client->getScannerResults(
+//    'test',
+//    new \Hbase\TScan([
+//        'startRow' => 'row3',
+//        'endRow' => 'row4',
+//    ]),
+//    10
+//);
+//echo "\n getScannerResults: ";
+//var_dump($result);
 
 $transport->close();

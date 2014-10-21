@@ -1,11 +1,21 @@
 {
-    "name": "giant/test",
-    "require": {
-	"apache/thrift": "1.0.*@dev"
+    "name": "moln/php-thrift-optimize",
+    "description" : "PHP thrift optimize & PHP Hbase optimize",
+    "type": "library",
+    "keywords": ["thrift", "hbase", "optimize"],
+    "suggest": {
+        "apache/thrift": "1.0.*@dev"
+    },
+    "replace" : {
+        "apache/thrift": "1.0.*@dev"
+    },
+    "conflict" : {
+        "apache/thrift": "1.0.*@dev"
     },
     "autoload":{
-        "files" : [
-
-        ]
+        "psr-0":{
+            "Hbase\\":"src/",
+            "Thrift\\":"src/"
+        }
     }
 }
