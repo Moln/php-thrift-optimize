@@ -3,9 +3,6 @@
     "description" : "PHP thrift optimize & PHP Hbase optimize",
     "type": "library",
     "keywords": ["thrift", "hbase", "optimize"],
-    "suggest": {
-        "apache/thrift": "1.0.*@dev"
-    },
     "replace" : {
         "apache/thrift": "1.0.*@dev"
     },
